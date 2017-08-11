@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>ルーム詳細 - SSA</title>
+</head>
+<body>
+
+<h1 th:inline="text">ルーム詳細画面</h1>
+
+<div th:text="|ルーム名 : ${detail.roomName}|"></div>
+<th:block th:unless="${detail.joinAccounts.isEmpty()}">
+    <p>参加メンバー</p>
+    <div th:each="joinAccount : ${detail.joinAccounts}">
+        <div th:text="|ニックネーム : ${joinAccount.nickname}  ※ RoomRole を表示予定|"></div>
+    </div>
+</th:block>
+
+<form id="createInviteLink" method="post" th:action="@{|/room/createInviteLink|}">
+    <input type="hidden" name="roomId" th:value="${detail.roomId}"/>
+    <div><input type="submit" value="このルームの招待リンクを生成する"/></div>
+</form>
+
+<div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
+<div><a th:href="@{|/home|}">HOMEへ</a></div>
+
+<div class="footer">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+
+</body>
+</html>

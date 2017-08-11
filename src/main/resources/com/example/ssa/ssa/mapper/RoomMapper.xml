@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ssa.ssa.mapper.RoomMapper">
+
+    <select id="loadList" resultType="com.example.ssa.ssa.domain.Room">
+        SELECT
+            R.roomId,
+            R.roomName
+            <!-- ,AJR.roomRole -->
+        FROM
+            Room R
+            INNER JOIN AccountJoinRoom AJR ON R.roomId = AJR.roomId
+        WHERE
+            AJR.accountId = #{accountId}
+    </select>
+
+    <insert id="insert" parameterType="com.example.ssa.ssa.domain.Room">
+        INSERT INTO
+        Room (
+            roomName,
+            createdAt,
+            updatedAt
+        ) VALUES (
+            #{roomName},
+            now(),
+            now()
+        )
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="roomId">
+            SELECT LAST_INSERT_ID() as roomId
+        </selectKey>
+    </insert>
+
+    <select id="selectDetailById" resultMap="RoomDetailMap">
+        SELECT
+            R.roomId,
+            R.roomName,
+            <!-- AJR.roomRole, -->
+            A.accountId,
+            A.nickname
+        FROM
+            Room R
+            INNER JOIN AccountJoinRoom AJR ON R.roomId = AJR.roomId
+            INNER JOIN Account A ON AJR.accountId = A.accountId
+        WHERE
+            R.roomId = #{roomId}
+            AND
+            R.deleteFlag = b'0'
+    </select>
+    
+    <resultMap id="RoomDetailMap" type="com.example.ssa.ssa.domain.RoomDetail">
+        <id property="roomId" column="roomId" />
+        <result property="roomName" column="roomName"/>
+        <!-- <result property="roomRole" column="roomRole"/> -->
+        <collection property="joinAccounts" ofType="com.example.ssa.ssa.domain.Account">
+            <id property="accountId" column="accountId"/>
+            <result property="nickname" column="nickname"/>
+        </collection>
+    </resultMap>
+
+    <select id="isValidById" resultType="boolean">
+        SELECT (
+            EXISTS (
+                SELECT
+                    1
+                FROM
+                    Room
+                WHERE
+                    roomId = #{roomId}
+                    AND
+                    deleteFlag = b'0'
+            )
+        )
+    </select>
+</mapper>

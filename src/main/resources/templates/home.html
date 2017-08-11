@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>Home - SSA</title>
+</head>
+<body>
+
+<h1 th:inline="text"><th:block th:text="|HOME画面 - ${account.nickname}|"/></h1>
+
+<div><a th:href="@{|/room/list|}">あなたが参加しているルーム</a></div>
+<div><a th:href="@{|/room/input|}">ルームを作成する</a></div>
+
+<div class="footer">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+
+</body>
+</html>

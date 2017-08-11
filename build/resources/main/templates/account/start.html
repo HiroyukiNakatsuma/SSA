@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>スタート</title>
+</head>
+<body>
+
+<h1>スタート！</h1>
+
+<p>ニックネームを登録して始めよう！</p>
+
+<form method="post" th:action="@{|/account/startRegister|}" th:object="${accountStartRegisterForm}">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+        <span>Error!!</span>
+    </div>
+    <p><label>Nickname : <input type="text" name="nickname" th:value="*{nickname}" size="30" maxlength="40"/></label></p>
+    <input type="hidden" name="accountId" th:value="${accountId}"/>
+    <input type="submit" value="submit!!"/>
+</form>
+
+<a type="button" th:href="@{/login}">ログイン画面へ</a>
+
+</body>
+</html>
