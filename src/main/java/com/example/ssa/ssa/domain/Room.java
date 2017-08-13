@@ -1,6 +1,5 @@
 package com.example.ssa.ssa.domain;
 
-import com.example.ssa.ssa.enums.RoomRole;
 import lombok.Builder;
 import lombok.Data;
 
