@@ -25,7 +25,7 @@ public class RoomController {
 
     @GetMapping("/list")
     public String list(@AuthenticationPrincipal LoginUserDetails loginUserDetails, Model model) {
-        model.addAttribute("roomList", roomService.loadList(loginUserDetails.getLoginUser().getAccountId()));
+        model.addAttribute("roomList", roomService.loadJoinList(loginUserDetails.getLoginUser().getAccountId()));
         return "room/list";
     }
 
@@ -63,7 +63,7 @@ public class RoomController {
         }
 
         // ワンタイムキーを発行してリンク生成
-        model.addAttribute("inviteLinkUrl", roomService.createInviteLink());
+        model.addAttribute("inviteLinkUrl", roomService.createInviteLink(roomId, loginUserDetails.getLoginUser().getAccountId()));
 
         return "room/inviteLink";
     }

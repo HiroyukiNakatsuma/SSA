@@ -5,6 +5,7 @@ import com.example.ssa.ssa.component.util.UrlUtil;
 import com.example.ssa.ssa.domain.Room;
 import com.example.ssa.ssa.domain.RoomDetail;
 import com.example.ssa.ssa.mapper.AccountJoinRoomMapper;
+import com.example.ssa.ssa.mapper.OnetimeKeyRepository;
 import com.example.ssa.ssa.mapper.RoomMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,19 @@ public class RoomService {
     private UrlUtil urlUtil;
     @Autowired
     private SsaUtil ssaUtil;
+    @Autowired
+    private OnetimeKeyRepository onetimeKeyRepository;
 
-    public List<Room> loadList(Long accountId) {
+    /**
+     * ユーザーのルーム一覧を取得
+     */
+    public List<Room> loadJoinList(Long accountId) {
         return roomMapper.loadList(accountId);
     }
 
+    /**
+     * ルーム作成
+     */
     @Transactional
     public Long createRoom(String roomName, Long accountId) {
         Room room = Room.builder().roomName(roomName).build();
@@ -37,16 +46,29 @@ public class RoomService {
         return room.getRoomId();
     }
 
+    /**
+     * ルーム詳細取得
+     */
     public RoomDetail loadDetail(Long roomId) {
         return roomMapper.selectDetailById(roomId);
     }
 
+    /**
+     * 有効なルームが存在するかチェック
+     */
     public boolean isValid(long roomId) {
         return roomMapper.isValidById(roomId);
     }
 
-    public String createInviteLink() {
-        return urlUtil.getBaseUrl() + "/room/inviteJoin/" + ssaUtil.createHashedString();
+    /**
+     * ルーム招待URL発行
+     */
+    public String createInviteLink(long roomId, long accountId) {
+        String randomKey = ssaUtil.createHashedString();
+        // ランダムキー登録
+        onetimeKeyRepository.insert(roomId, accountId, randomKey);
+
+        return urlUtil.getBaseUrl() + "/room/inviteJoin/" + randomKey;
     }
 
 }
