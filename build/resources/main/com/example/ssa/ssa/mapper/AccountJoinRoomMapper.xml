@@ -17,4 +17,22 @@
         )
     </insert>
 
+    <select id="isJoined" resultType="boolean">
+        SELECT (
+            EXISTS (
+                SELECT
+                    1
+                FROM
+                    AccountJoinRoom AJR
+                    INNER JOIN Room R ON AJR.roomId = R.roomId
+                WHERE
+                    AJR.roomId = #{roomId}
+                    AND
+                    AJR.accountId = #{accountId}
+                    AND
+                    R.deleteFlag = b'0'
+            )
+        )
+    </select>
+
 </mapper>

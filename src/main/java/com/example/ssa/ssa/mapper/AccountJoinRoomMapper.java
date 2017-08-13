@@ -9,4 +9,6 @@ public interface AccountJoinRoomMapper {
     void insert(@Param("accountId") Long accountId,
                 @Param("roomId") Long roomId);
 
+    boolean isJoined(@Param("accountId") Long accountId,
+                     @Param("roomId") Long roomId);
 }

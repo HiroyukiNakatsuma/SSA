@@ -5,23 +5,24 @@ import com.example.ssa.ssa.component.util.UrlUtil;
 import com.example.ssa.ssa.controller.form.RoomCreateForm;
 import com.example.ssa.ssa.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 @Controller
 @RequestMapping("/room")
 public class RoomController {
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private MessageSource messageSource;
 
     @GetMapping("/list")
     public String list(@AuthenticationPrincipal LoginUserDetails loginUserDetails, Model model) {
@@ -66,6 +67,22 @@ public class RoomController {
         model.addAttribute("inviteLinkUrl", roomService.createInviteLink(roomId, loginUserDetails.getLoginUser().getAccountId()));
 
         return "room/inviteLink";
+    }
+
+    @GetMapping("/inviteJoin/{onetimeKey}")
+    public String inviteJoin(@PathVariable String onetimeKey,
+                             @AuthenticationPrincipal LoginUserDetails loginUserDetails,
+                             RedirectAttributes redirectAttributes) {
+        // ルーム参加
+        Long roomId = roomService.inviteJoin(onetimeKey, loginUserDetails.getLoginUser().getAccountId());
+
+        if (roomId == null) {
+            redirectAttributes.addFlashAttribute("invalidMessage", messageSource.getMessage("room.invite.invalid", null, Locale.getDefault()));
+            return "redirect:/home/";
+        }
+
+        redirectAttributes.addFlashAttribute("roomJoinMessage", messageSource.getMessage("room.invite.join", null, Locale.getDefault()));
+        return "redirect:/room/detail/" + roomId;
     }
 
 }

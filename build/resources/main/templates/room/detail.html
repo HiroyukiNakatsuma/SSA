@@ -9,6 +9,10 @@
 
 <h1 th:inline="text">ルーム詳細画面</h1>
 
+<div class="alert alert-success" th:if="${roomJoinMessage}">
+    <span th:text="${roomJoinMessage}"></span>
+</div>
+
 <div th:text="|ルーム名 : ${detail.roomName}|"></div>
 <th:block th:unless="${detail.joinAccounts.isEmpty()}">
     <p>参加メンバー</p>

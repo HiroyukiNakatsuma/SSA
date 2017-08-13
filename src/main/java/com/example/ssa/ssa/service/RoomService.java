@@ -5,7 +5,7 @@ import com.example.ssa.ssa.component.util.UrlUtil;
 import com.example.ssa.ssa.domain.Room;
 import com.example.ssa.ssa.domain.RoomDetail;
 import com.example.ssa.ssa.mapper.AccountJoinRoomMapper;
-import com.example.ssa.ssa.mapper.OnetimeKeyRepository;
+import com.example.ssa.ssa.mapper.OnetimeKeyMapper;
 import com.example.ssa.ssa.mapper.RoomMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class RoomService {
     @Autowired
     private SsaUtil ssaUtil;
     @Autowired
-    private OnetimeKeyRepository onetimeKeyRepository;
+    private OnetimeKeyMapper onetimeKeyMapper;
 
     /**
      * ユーザーのルーム一覧を取得
@@ -66,9 +66,23 @@ public class RoomService {
     public String createInviteLink(long roomId, long accountId) {
         String randomKey = ssaUtil.createHashedString();
         // ランダムキー登録
-        onetimeKeyRepository.insert(roomId, accountId, randomKey);
-
+        onetimeKeyMapper.insert(roomId, accountId, randomKey);
         return urlUtil.getBaseUrl() + "/room/inviteJoin/" + randomKey;
+    }
+
+    /**
+     * 招待によるルーム参加処理
+     */
+    public Long inviteJoin(String onetimeKey, long accountId) {
+        // ワンタイムキーが有効かチェック
+        Long roomId = onetimeKeyMapper.isValid(onetimeKey);
+
+        // ルーム参加処理
+        if (roomId != null && !accountJoinRoomMapper.isJoined(accountId, roomId)) {
+            accountJoinRoomMapper.insert(accountId, roomId);
+            onetimeKeyMapper.updateUsedFlag(onetimeKey);
+        }
+        return roomId;
     }
 
 }
