@@ -1,8 +1,8 @@
 package com.example.ssa.ssa.service;
 
 import com.example.ssa.ssa.WebSecurityConfig;
-import com.example.ssa.ssa.domain.Account;
-import com.example.ssa.ssa.mapper.AccountMapper;
+import com.example.ssa.ssa.domain.model.Account;
+import com.example.ssa.ssa.domain.mapper.AccountMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,9 +40,12 @@ public class AccountService {
         return accountMapper.selectIdByMailAddress(mailAddress);
     }
 
+    /**
+     * ニックネーム登録
+     */
     @Transactional
-    public void startRegister(Long accountId, String nickname) {
-        accountMapper.updateSetNickname(accountId, nickname);
+    public void setNickname(Long accountId, String nickname) {
+        accountMapper.updateNickname(accountId, nickname);
     }
 
 }

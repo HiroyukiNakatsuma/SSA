@@ -7,8 +7,8 @@
     <select id="loadList" resultType="com.example.ssa.ssa.domain.Room">
         SELECT
             R.roomId,
-            R.roomName
-            <!-- ,AJR.roomRole -->
+            R.roomName,
+            AJR.roomRole
         FROM
             Room R
             INNER JOIN AccountJoinRoom AJR ON R.roomId = AJR.roomId
@@ -36,7 +36,7 @@
         SELECT
             R.roomId,
             R.roomName,
-            <!-- AJR.roomRole, -->
+            AJR.roomRole,
             A.accountId,
             A.nickname
         FROM
@@ -52,7 +52,7 @@
     <resultMap id="RoomDetailMap" type="com.example.ssa.ssa.domain.RoomDetail">
         <id property="roomId" column="roomId" />
         <result property="roomName" column="roomName"/>
-        <!-- <result property="roomRole" column="roomRole"/> -->
+        <result property="roomRole" column="roomRole"/>
         <collection property="joinAccounts" ofType="com.example.ssa.ssa.domain.Account">
             <id property="accountId" column="accountId"/>
             <result property="nickname" column="nickname"/>

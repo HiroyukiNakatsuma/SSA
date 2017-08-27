@@ -1,6 +1,6 @@
-package com.example.ssa.ssa.domain;
+package com.example.ssa.ssa.domain.model;
 
-import com.example.ssa.ssa.enums.RoomRole;
+import com.example.ssa.ssa.domain.model.Account;
 import lombok.Data;
 
 import java.util.List;
@@ -9,6 +9,6 @@ import java.util.List;
 public class RoomDetail {
     private Long roomId;
     private String roomName;
-    private RoomRole roomRole;
+    private Integer roomRole; // TODO Convert enums
     private List<Account> joinAccounts;
 }

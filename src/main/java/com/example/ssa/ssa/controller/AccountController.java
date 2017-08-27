@@ -65,7 +65,7 @@ public class AccountController {
         if (result.hasErrors()) {
             return "account/start";
         }
-        accountService.startRegister(form.getAccountId(), form.getNickname());
+        accountService.setNickname(form.getAccountId(), form.getNickname());
         return "redirect:/";
     }
 

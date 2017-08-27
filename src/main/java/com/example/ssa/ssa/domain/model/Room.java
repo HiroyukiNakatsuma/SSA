@@ -1,4 +1,4 @@
-package com.example.ssa.ssa.domain;
+package com.example.ssa.ssa.domain.model;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,5 +8,5 @@ import lombok.Data;
 public class Room {
     private Long roomId;
     private String roomName;
-//    private RoomRole roomRole;
+    private Integer roomRole; // TODO Convert enums
 }

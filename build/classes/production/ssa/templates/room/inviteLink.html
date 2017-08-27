@@ -3,13 +3,17 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
     <title>招待リンク生成 - SSA</title>
 </head>
 <body>
 
 <h1 th:inline="text">招待リンク生成画面</h1>
 
-<div th:text="|招待リンク : ${inviteLinkUrl}|"></div>
+<div>
+    <p>招待リンク : </p><input id="inviteLinkUrl" th:value="${inviteLinkUrl}" size="80"/>
+    <img class="btn clipboard" data-clipboard-target="#inviteLinkUrl" th:src="@{/image/clipBoard.png}"/>
+</div>
 
 <div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
 <div><a th:href="@{|/home|}">HOMEへ</a></div>
@@ -21,4 +25,14 @@
 </div>
 
 </body>
+<script>
+    $(function () {
+        var clipboard = new Clipboard('.btn');
+
+        clipboard.on('success', function(e) {
+            alert('クリップボードにコピーしました。');
+            e.clearSelection();
+        });
+    });
+</script>
 </html>

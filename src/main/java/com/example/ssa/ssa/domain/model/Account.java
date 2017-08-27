@@ -1,4 +1,4 @@
-package com.example.ssa.ssa.domain;
+package com.example.ssa.ssa.domain.model;
 
 import lombok.Data;
 

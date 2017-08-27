@@ -2,11 +2,12 @@ package com.example.ssa.ssa.service;
 
 import com.example.ssa.ssa.component.util.SsaUtil;
 import com.example.ssa.ssa.component.util.UrlUtil;
-import com.example.ssa.ssa.domain.Room;
-import com.example.ssa.ssa.domain.RoomDetail;
-import com.example.ssa.ssa.mapper.AccountJoinRoomMapper;
-import com.example.ssa.ssa.mapper.OnetimeKeyMapper;
-import com.example.ssa.ssa.mapper.RoomMapper;
+import com.example.ssa.ssa.domain.model.Room;
+import com.example.ssa.ssa.domain.model.RoomDetail;
+import com.example.ssa.ssa.enums.RoomRole;
+import com.example.ssa.ssa.domain.mapper.AccountJoinRoomMapper;
+import com.example.ssa.ssa.domain.mapper.OnetimeKeyMapper;
+import com.example.ssa.ssa.domain.mapper.RoomMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,13 @@ public class RoomService {
     }
 
     /**
-     * ルーム作成
+     * ルームを新規作成
      */
     @Transactional
     public Long createRoom(String roomName, Long accountId) {
         Room room = Room.builder().roomName(roomName).build();
         roomMapper.insert(room);
-        accountJoinRoomMapper.insert(accountId, room.getRoomId());
+        accountJoinRoomMapper.insert(accountId, room.getRoomId(), RoomRole.OWNER.getCode());
         return room.getRoomId();
     }
 
@@ -55,6 +56,9 @@ public class RoomService {
 
     /**
      * 有効なルームが存在するかチェック
+     *
+     * @param roomId ルームID
+     * @return 有効なルームありならtrue、なければfalse
      */
     public boolean isValid(long roomId) {
         return roomMapper.isValidById(roomId);
@@ -62,6 +66,10 @@ public class RoomService {
 
     /**
      * ルーム招待URL発行
+     *
+     * @param roomId    ルームID
+     * @param accountId 会員ID
+     * @return 招待URL
      */
     public String createInviteLink(long roomId, long accountId) {
         String randomKey = ssaUtil.createHashedString();
@@ -79,7 +87,7 @@ public class RoomService {
 
         // ルーム参加処理
         if (roomId != null && !accountJoinRoomMapper.isJoined(accountId, roomId)) {
-            accountJoinRoomMapper.insert(accountId, roomId);
+            accountJoinRoomMapper.insert(accountId, roomId, RoomRole.MEMBER.getCode());
             onetimeKeyMapper.updateUsedFlag(onetimeKey);
         }
         return roomId;

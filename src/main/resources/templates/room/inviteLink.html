@@ -4,6 +4,7 @@
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script src="/js/room/inviteLink.js" th:src="@{|/js/room/inviteLink.js|}"></script>
     <title>招待リンク生成 - SSA</title>
 </head>
 <body>
@@ -18,21 +19,7 @@
 <div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
 <div><a th:href="@{|/home|}">HOMEへ</a></div>
 
-<div class="footer">
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-</div>
+<th:block th:include="fragment/common_footer :: common_footer"></th:block>
 
 </body>
-<script>
-    $(function () {
-        var clipboard = new Clipboard('.btn');
-
-        clipboard.on('success', function(e) {
-            alert('クリップボードにコピーしました。');
-            e.clearSelection();
-        });
-    });
-</script>
 </html>

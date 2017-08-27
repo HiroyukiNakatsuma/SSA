@@ -1,6 +1,6 @@
 package com.example.ssa.ssa.component.security;
 
-import com.example.ssa.ssa.mapper.AccountMapper;
+import com.example.ssa.ssa.domain.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

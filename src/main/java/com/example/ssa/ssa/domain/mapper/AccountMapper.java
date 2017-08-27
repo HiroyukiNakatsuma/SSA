@@ -1,7 +1,7 @@
-package com.example.ssa.ssa.mapper;
+package com.example.ssa.ssa.domain.mapper;
 
 import com.example.ssa.ssa.component.security.LoginUser;
-import com.example.ssa.ssa.domain.Account;
+import com.example.ssa.ssa.domain.model.Account;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +18,6 @@ public interface AccountMapper {
 
     Long selectIdByMailAddress(@Param("mailAddress") String mailAddress);
 
-    void updateSetNickname(@Param("accountId") Long accountId, @Param("nickname") String nickname);
+    void updateNickname(@Param("accountId") Long accountId, @Param("nickname") String nickname);
 
 }

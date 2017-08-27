@@ -19,11 +19,7 @@
 
 <a th:href="@{|/room/list|}">ルーム一覧へ</a>
 
-<div class="footer">
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-</div>
+<th:block th:include="fragment/common_footer :: common_footer"></th:block>
 
 </body>
 </html>

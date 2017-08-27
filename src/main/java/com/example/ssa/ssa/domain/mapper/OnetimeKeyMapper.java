@@ -1,4 +1,4 @@
-package com.example.ssa.ssa.mapper;
+package com.example.ssa.ssa.domain.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

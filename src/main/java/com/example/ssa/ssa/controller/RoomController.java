@@ -24,17 +24,26 @@ public class RoomController {
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * 参加ルームリスト画面表示
+     */
     @GetMapping("/list")
     public String list(@AuthenticationPrincipal LoginUserDetails loginUserDetails, Model model) {
         model.addAttribute("roomList", roomService.loadJoinList(loginUserDetails.getLoginUser().getAccountId()));
         return "room/list";
     }
 
+    /**
+     * ルーム作成画面表示
+     */
     @GetMapping("/input")
     public String input(@ModelAttribute RoomCreateForm form) {
         return "room/input";
     }
 
+    /**
+     * ルーム作成処理
+     */
     @PostMapping("/create")
     public String create(@AuthenticationPrincipal LoginUserDetails loginUserDetails,
                          @Validated RoomCreateForm form,
@@ -48,12 +57,18 @@ public class RoomController {
         return "redirect:/room/detail/" + roomId;
     }
 
+    /**
+     * ルーム詳細画面表示
+     */
     @GetMapping("/detail/{roomId}")
     public String detail(@PathVariable Long roomId, Model model) {
         model.addAttribute("detail", roomService.loadDetail(roomId));
         return "room/detail";
     }
 
+    /**
+     * ルーム招待リンクの生成画面表示
+     */
     @PostMapping("/createInviteLink")
     public String createInviteLink(@RequestParam("roomId") Long roomId,
                                    @AuthenticationPrincipal LoginUserDetails loginUserDetails,
@@ -69,6 +84,9 @@ public class RoomController {
         return "room/inviteLink";
     }
 
+    /**
+     * 招待リンクからルーム参加
+     */
     @GetMapping("/inviteJoin/{onetimeKey}")
     public String inviteJoin(@PathVariable String onetimeKey,
                              @AuthenticationPrincipal LoginUserDetails loginUserDetails,

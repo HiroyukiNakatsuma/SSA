@@ -1,7 +1,7 @@
-package com.example.ssa.ssa.mapper;
+package com.example.ssa.ssa.domain.mapper;
 
-import com.example.ssa.ssa.domain.Room;
-import com.example.ssa.ssa.domain.RoomDetail;
+import com.example.ssa.ssa.domain.model.Room;
+import com.example.ssa.ssa.domain.model.RoomDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
