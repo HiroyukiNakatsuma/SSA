@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>予定作成 - SSA</title>
+</head>
+<body>
+
+<h1 th:inline="text">予定作成画面</h1>
+
+<form id="planCreateForm" method="post" th:action="@{/plan/create}" th:object="${planCreateForm}">
+    <div>タイトル：<input type="text" name="title" th:value="*{title}"/></div>
+    <div>開始日時：<input type="datetime" name="startDateTime" th:value="*{startDateTime}"/></div>
+    <div>終了日時：<input type="datetime" name="endDateTime" th:value="*{endDateTime}"/></div>
+    <div>メモ：<input type="text" name="memo" th:value="*{memo}"/></div>
+    <input type="hidden" name="roomId" th:value="*{roomId}"/>
+</form>
+
+<th:block th:include="fragment/common_footer :: common_footer"></th:block>
+
+</body>
+</html>

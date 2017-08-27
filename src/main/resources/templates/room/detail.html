@@ -9,9 +9,8 @@
 
 <h1 th:inline="text">ルーム詳細画面</h1>
 
-<div class="alert alert-success" th:if="${roomJoinMessage}">
-    <span th:text="${roomJoinMessage}"></span>
-</div>
+<div class="alert alert-success" th:if="${roomJoinMessage}"><span th:text="${roomJoinMessage}"></span></div>
+<div class="alert alert-alert" th:if="${notJoinedMessage}"><span th:text="${notJoinedMessage}"></span></div>
 
 <div th:text="|ルーム名 : ${detail.roomName}|"></div>
 <th:block th:unless="${detail.joinAccounts.isEmpty()}">
@@ -21,13 +20,14 @@
     </div>
 </th:block>
 
+<div><a th:href="@{|/plan/input?roomId=${detail.roomId}|}">予定を作成する</a></div>
+
 <form id="createInviteLink" method="post" th:action="@{|/room/createInviteLink|}">
     <input type="hidden" name="roomId" th:value="${detail.roomId}"/>
     <div><input type="submit" value="このルームの招待リンクを生成する"/></div>
 </form>
 
 <div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
-<div><a th:href="@{|/home|}">HOMEへ</a></div>
 
 <th:block th:include="fragment/common_footer :: common_footer"></th:block>
 

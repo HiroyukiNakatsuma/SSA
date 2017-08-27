@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <th:block th:fragment="common_footer">
+    <div><a th:href="@{|/home|}">HOMEへ</a></div>
     <div class="footer">
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>

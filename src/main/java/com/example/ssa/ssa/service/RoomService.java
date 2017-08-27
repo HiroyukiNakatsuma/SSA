@@ -86,11 +86,18 @@ public class RoomService {
         Long roomId = onetimeKeyMapper.isValid(onetimeKey);
 
         // ルーム参加処理
-        if (roomId != null && !accountJoinRoomMapper.isJoined(accountId, roomId)) {
+        if (roomId != null && !isJoined(accountId, roomId)) {
             accountJoinRoomMapper.insert(accountId, roomId, RoomRole.MEMBER.getCode());
             onetimeKeyMapper.updateUsedFlag(onetimeKey);
         }
         return roomId;
+    }
+
+    /**
+     * ルームに参加しているかどうか
+     */
+    public boolean isJoined(long accountId, long roomId) {
+        return accountJoinRoomMapper.isJoined(accountId, roomId);
     }
 
 }

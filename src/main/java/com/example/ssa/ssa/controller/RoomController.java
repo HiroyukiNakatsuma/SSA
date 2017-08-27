@@ -51,9 +51,7 @@ public class RoomController {
         if (result.hasErrors()) {
             return "room/input";
         }
-
         Long roomId = roomService.createRoom(form.getRoomName(), loginUserDetails.getLoginUser().getAccountId());
-
         return "redirect:/room/detail/" + roomId;
     }
 
@@ -77,10 +75,8 @@ public class RoomController {
         if (roomId == null || !roomService.isValid(roomId)) {
             return "room/list";
         }
-
         // ワンタイムキーを発行してリンク生成
         model.addAttribute("inviteLinkUrl", roomService.createInviteLink(roomId, loginUserDetails.getLoginUser().getAccountId()));
-
         return "room/inviteLink";
     }
 
@@ -93,12 +89,10 @@ public class RoomController {
                              RedirectAttributes redirectAttributes) {
         // ルーム参加
         Long roomId = roomService.inviteJoin(onetimeKey, loginUserDetails.getLoginUser().getAccountId());
-
         if (roomId == null) {
             redirectAttributes.addFlashAttribute("invalidMessage", messageSource.getMessage("room.invite.invalid", null, Locale.getDefault()));
             return "redirect:/home/";
         }
-
         redirectAttributes.addFlashAttribute("roomJoinMessage", messageSource.getMessage("room.invite.join", null, Locale.getDefault()));
         return "redirect:/room/detail/" + roomId;
     }
