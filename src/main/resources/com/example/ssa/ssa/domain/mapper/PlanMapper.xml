@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ssa.ssa.domain.mapper.PlanMapper">
+    <insert id="insert">
+        INSERT INTO
+            Plan (
+            roomId,
+            title,
+            startDateTime,
+            endDateTime,
+            memo,
+            createdAccountId,
+            createdAt,
+            updatedAt
+        ) VALUES (
+            #{roomId},
+            #{title},
+            #{startDateTime},
+            #{endDateTime},
+            #{memo},
+            #{createdAccountId},
+            now(),
+            now()
+        )
+    </insert>
+</mapper>

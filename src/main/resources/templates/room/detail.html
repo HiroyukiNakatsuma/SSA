@@ -10,6 +10,7 @@
 <h1 th:inline="text">ルーム詳細画面</h1>
 
 <div class="alert alert-success" th:if="${roomJoinMessage}"><span th:text="${roomJoinMessage}"></span></div>
+<div class="alert alert-success" th:if="${createPlanMessage}"><span th:text="${createPlanMessage}"></span></div>
 <div class="alert alert-alert" th:if="${notJoinedMessage}"><span th:text="${notJoinedMessage}"></span></div>
 
 <div th:text="|ルーム名 : ${detail.roomName}|"></div>

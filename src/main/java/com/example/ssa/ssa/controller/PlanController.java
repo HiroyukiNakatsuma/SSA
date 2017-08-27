@@ -1,17 +1,18 @@
 package com.example.ssa.ssa.controller;
 
+import com.example.ssa.ssa.component.security.LoginUser;
 import com.example.ssa.ssa.component.security.LoginUserDetails;
 import com.example.ssa.ssa.controller.form.PlanCreateForm;
+import com.example.ssa.ssa.service.PlanService;
 import com.example.ssa.ssa.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/plan")
 public class PlanController {
+    @Autowired
+    private PlanService planService;
     @Autowired
     private RoomService roomService;
     @Autowired
@@ -44,5 +47,31 @@ public class PlanController {
         form.setStartDateTime(LocalDateTime.now());
         form.setEndDateTime(LocalDateTime.now().plusHours(1));
         return "plan/input";
+    }
+
+    @PostMapping("/create")
+    public String create(@Validated PlanCreateForm form,
+                         BindingResult result,
+                         @AuthenticationPrincipal LoginUserDetails loginUserDetails,
+                         Model model) {
+        LoginUser loginUser = loginUserDetails.getLoginUser();
+        if (result.hasErrors()) {
+            return "plan/input";
+        }
+        // 参加していないルームIDの場合、エラー
+        if (!roomService.isJoined(loginUser.getAccountId(), form.getRoomId())) {
+            model.addAttribute("notJoinedMessage", messageSource.getMessage("plan.notJoined", null, Locale.getDefault()));
+            return "plan/input";
+        }
+        // 予定作成
+        planService.create(
+                form.getRoomId(),
+                form.getTitle(),
+                form.getStartDateTime(),
+                form.getEndDateTime(),
+                form.getMemo(),
+                loginUser.getAccountId());
+        model.addAttribute("createPlanMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));
+        return "room/detail";
     }
 }
