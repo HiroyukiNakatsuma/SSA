@@ -13,12 +13,15 @@ public class PlanService {
     @Autowired
     private PlanMapper planMapper;
 
+    /**
+     * 予定作成
+     */
     public void create(long roomId,
                        String title,
                        LocalDateTime startDateTime,
-                       LocalDateTime endtDateTime,
+                       LocalDateTime endDateTime,
                        String memo,
                        long accountId) {
-        planMapper.insert(roomId, title, startDateTime, endtDateTime, memo, accountId);
+        planMapper.insert(roomId, title, startDateTime, endDateTime, memo, accountId);
     }
 }

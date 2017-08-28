@@ -10,9 +10,9 @@ public interface PlanMapper {
 
     void insert(@Param("roomId") long roomId,
                 @Param("title") String title,
-                @Param("startDatTime") LocalDateTime startDatTime,
-                @Param("endDatTime") LocalDateTime endDatTime,
+                @Param("startDateTime") LocalDateTime startDateTime,
+                @Param("endDateTime") LocalDateTime endDateTime,
                 @Param("memo") String memo,
-                @Param("accountId") long accountId);
+                @Param("createdAccountId") long createdAccountId);
 
 }

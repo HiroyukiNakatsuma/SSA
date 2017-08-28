@@ -10,14 +10,19 @@
 <h1 th:inline="text">予定作成画面</h1>
 
 <div class="alert alert-alert" th:if="${notJoinedMessage}"><span th:text="${notJoinedMessage}"></span></div>
+<div class="alert alert-success" th:if="${createPlanMessage}"><span th:text="${createPlanMessage}"></span></div>
 
 <div class="container">
     <form id="planCreateForm" method="post" th:action="@{/plan/create}" th:object="${planCreateForm}">
+        <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+            <span>Error!!</span>
+        </div>
         <div>タイトル：<input type="text" name="title" th:value="*{title}"/></div>
         <div>開始日時：<input type="datetime" name="startDateTime" th:value="*{startDateTime}"/></div>
         <div>終了日時：<input type="datetime" name="endDateTime" th:value="*{endDateTime}"/></div>
         <div>メモ：<input type="text" name="memo" th:value="*{memo}"/></div>
         <input type="hidden" name="roomId" th:value="*{roomId}"/>
+        <div><input type="submit" value="作成"/></div>
     </form>
 </div>
 

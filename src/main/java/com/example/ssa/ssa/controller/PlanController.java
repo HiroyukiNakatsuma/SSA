@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 @Controller
@@ -44,11 +45,14 @@ public class PlanController {
             return "room/detail";
         }
         form.setRoomId(roomId);
-        form.setStartDateTime(LocalDateTime.now());
-        form.setEndDateTime(LocalDateTime.now().plusHours(1));
+        form.setStartDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        form.setEndDateTime(LocalDateTime.now().plusHours(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return "plan/input";
     }
 
+    /**
+     * 予定作成処理
+     */
     @PostMapping("/create")
     public String create(@Validated PlanCreateForm form,
                          BindingResult result,
@@ -67,11 +71,11 @@ public class PlanController {
         planService.create(
                 form.getRoomId(),
                 form.getTitle(),
-                form.getStartDateTime(),
-                form.getEndDateTime(),
+                LocalDateTime.parse(form.getStartDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                LocalDateTime.parse(form.getEndDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                 form.getMemo(),
                 loginUser.getAccountId());
         model.addAttribute("createPlanMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));
-        return "room/detail";
+        return "redirect:/room/detail/" + form.getRoomId();
     }
 }
