@@ -14,9 +14,13 @@ public class PlanCreateForm {
     @Length(max = 40)
     private String title;
     @NotNull
-    private String startDateTime;
+    private String startDate;
     @NotNull
-    private String endDateTime;
+    private String startTime;
+    @NotNull
+    private String endDate;
+    @NotNull
+    private String endTime;
     @Length(max = 100)
     private String memo;
 }

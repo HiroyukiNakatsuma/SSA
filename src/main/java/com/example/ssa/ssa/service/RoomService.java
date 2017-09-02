@@ -8,11 +8,13 @@ import com.example.ssa.ssa.enums.RoomRole;
 import com.example.ssa.ssa.domain.mapper.AccountJoinRoomMapper;
 import com.example.ssa.ssa.domain.mapper.OnetimeKeyMapper;
 import com.example.ssa.ssa.domain.mapper.RoomMapper;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Slf4j

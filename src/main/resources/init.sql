@@ -4,10 +4,11 @@ DROP TABLE IF EXISTS ssa.Schedule;
 
 DROP TABLE IF EXISTS ssa.OnetimeKey;
 
-DROP TABLE IF EXISTS ssa.Account;
+DROP TABLE IF EXISTS ssa.Plan;
 
 DROP TABLE IF EXISTS ssa.Room;
 
+DROP TABLE IF EXISTS ssa.Account;
 
 CREATE TABLE ssa.Account (
     accountId BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -53,8 +54,10 @@ CREATE TABLE ssa.Plan (
     planId BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     roomId BIGINT(20) NULL,
     title VARCHAR(40) NOT NULL,
-    startDateTime DATETIME NOT NULL,
-    endDateTime DATETIME NOT NULL,
+    startDate DATE NOT NULL,
+    startTime TIME NULL DEFAULT NULL,
+    endDate DATE NOT NULL,
+    endTime TIME NULL DEFAULT NULL,
     memo VARCHAR(100) NULL DEFAULT NULL,
     createdAccountId BIGINT(20) NOT NULL,
     createdAt DATETIME NOT NULL,

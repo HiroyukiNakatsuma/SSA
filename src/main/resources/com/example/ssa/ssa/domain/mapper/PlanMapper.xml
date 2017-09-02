@@ -3,13 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.ssa.ssa.domain.mapper.PlanMapper">
+
+    <select id="selectListOfDay" resultType="com.example.ssa.ssa.domain.model.Plan">
+        SELECT
+            planId,
+            roomId,
+            title,
+            startDate,
+            startTime,
+            endDate,
+            endTime
+        FROM
+            Plan
+        WHERE
+            <!-- ターゲット日付が予定の開始日と終了日の間の場合 -->
+            startDate >= #{targetDate} AND #{targetDate} >= endDate
+    </select>
+
     <insert id="insert">
         INSERT INTO
             Plan (
             roomId,
             title,
-            startDateTime,
-            endDateTime,
+            startDate,
+            startTime,
+            endDate,
+            endTime,
             memo,
             createdAccountId,
             createdAt,
@@ -17,8 +36,10 @@
         ) VALUES (
             #{roomId},
             #{title},
-            #{startDateTime},
-            #{endDateTime},
+            #{startDate},
+            #{startTime},
+            #{endDate},
+            #{endTime},
             #{memo},
             #{createdAccountId},
             now(),

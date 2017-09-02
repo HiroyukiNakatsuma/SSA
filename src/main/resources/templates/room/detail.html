@@ -17,9 +17,39 @@
 <th:block th:unless="${detail.joinAccounts.isEmpty()}">
     <p>参加メンバー</p>
     <div th:each="joinAccount : ${detail.joinAccounts}">
-        <div th:text="|ニックネーム : ${joinAccount.nickname}  ※ RoomRole を表示予定|"></div>
+        <div th:text="|${joinAccount.nickname} （オーナー）|"></div>
     </div>
 </th:block>
+
+<table border="3" width="90%">
+    <tr>
+        <td><p>MON</p></td>
+        <td><p>TUE</p></td>
+        <td><p>WED</p></td>
+        <td><p>THU</p></td>
+        <td><p>FRI</p></td>
+        <td><p>SAT</p></td>
+        <td><p>SUN</p></td>
+    </tr>
+    <tr>
+        <td><p>1</p></td>
+        <td><p>2</p></td>
+        <td><p>3</p></td>
+        <td><p>4</p></td>
+        <td><p>5</p></td>
+        <td><p>6</p></td>
+        <td><p>7</p></td>
+    </tr>
+    <tr>
+        <td><p>8</p></td>
+        <td><p>9</p></td>
+        <td><p>10</p></td>
+        <td><p>11</p></td>
+        <td><p>12</p></td>
+        <td><p>13</p></td>
+        <td><p>14</p></td>
+    </tr>
+</table>
 
 <div><a th:href="@{|/plan/input?roomId=${detail.roomId}|}">予定を作成する</a></div>
 

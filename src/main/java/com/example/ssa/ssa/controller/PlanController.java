@@ -15,7 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -36,7 +38,6 @@ public class PlanController {
     public String input(@ModelAttribute PlanCreateForm form,
                         @RequestParam Long roomId,
                         @AuthenticationPrincipal LoginUserDetails loginUserDetails,
-                        RedirectAttributes attributes,
                         Model model) {
         // 参加していないルームIDの場合、エラー
         if (!roomService.isJoined(loginUserDetails.getLoginUser().getAccountId(), roomId)) {
@@ -45,8 +46,10 @@ public class PlanController {
             return "room/detail";
         }
         form.setRoomId(roomId);
-        form.setStartDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        form.setEndDateTime(LocalDateTime.now().plusHours(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        form.setStartDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        form.setStartTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        form.setEndDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        form.setEndTime(LocalTime.now().plusHours(1).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         return "plan/input";
     }
 
@@ -71,8 +74,10 @@ public class PlanController {
         planService.create(
                 form.getRoomId(),
                 form.getTitle(),
-                LocalDateTime.parse(form.getStartDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                LocalDateTime.parse(form.getEndDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                LocalDate.parse(form.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                LocalTime.parse(form.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
+                LocalDate.parse(form.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                LocalTime.parse(form.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
                 form.getMemo(),
                 loginUser.getAccountId());
         model.addAttribute("createPlanMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));

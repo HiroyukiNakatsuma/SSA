@@ -3,6 +3,7 @@ package com.example.ssa.ssa.controller;
 import com.example.ssa.ssa.component.security.LoginUserDetails;
 import com.example.ssa.ssa.component.util.UrlUtil;
 import com.example.ssa.ssa.controller.form.RoomCreateForm;
+import com.example.ssa.ssa.service.PlanService;
 import com.example.ssa.ssa.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -21,6 +22,8 @@ import java.util.*;
 public class RoomController {
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private PlanService planService;
     @Autowired
     private MessageSource messageSource;
 
@@ -59,8 +62,15 @@ public class RoomController {
      * ルーム詳細画面表示
      */
     @GetMapping("/detail/{roomId}")
-    public String detail(@PathVariable Long roomId, Model model) {
+    public String detail(@AuthenticationPrincipal LoginUserDetails loginUserDetails,
+                         @PathVariable Long roomId,
+                         Model model) {
         model.addAttribute("detail", roomService.loadDetail(roomId));
+        try {
+            model.addAttribute("calendar", planService.loadCalendarWithPlan(roomId, loginUserDetails.getLoginUser().getAccountId()));
+        } catch (Exception e) {
+            model.addAttribute("message", "message");
+        }
         return "room/detail";
     }
 
