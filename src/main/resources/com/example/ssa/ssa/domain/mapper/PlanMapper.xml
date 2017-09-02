@@ -16,7 +16,7 @@
         FROM
             Plan
         WHERE
-            <!-- ターゲット日付が予定の開始日と終了日の間の場合 -->
+            <!-- ターゲット日付が予定の開始日と終了日の間 (複数日にまたがる場合、その間の日付の予定も取得する) -->
             startDate >= #{targetDate} AND #{targetDate} >= endDate
     </select>
 
