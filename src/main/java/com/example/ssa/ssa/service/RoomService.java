@@ -73,6 +73,7 @@ public class RoomService {
      * @param accountId 会員ID
      * @return 招待URL
      */
+    @Transactional
     public String createInviteLink(long roomId, long accountId) {
         String randomKey = ssaUtil.createHashedString();
         // ランダムキー登録
@@ -83,6 +84,7 @@ public class RoomService {
     /**
      * 招待によるルーム参加処理
      */
+    @Transactional
     public Long inviteJoin(String onetimeKey, long accountId) {
         // ワンタイムキーが有効かチェック
         Long roomId = onetimeKeyMapper.isValid(onetimeKey);
