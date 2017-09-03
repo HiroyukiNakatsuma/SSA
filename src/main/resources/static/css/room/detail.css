@@ -1,0 +1,35 @@
+.month{
+  font-size: x-large;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.calendar{
+  table-layout: fixed;
+  text-align: center;
+}
+
+.day-of-week{
+  background: #F44336;
+  color: white;
+}
+
+.date{
+  height: 25px;
+}
+
+.plan-icon{
+  margin: 0 0.7px;
+  display: inline-block;
+  text-decoration: none;
+  background: #2196f3;
+  color: #FFF;
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  transition: .4s;
+}

@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/room/detail.css|}" media="all"/>
     <title>ルーム詳細 - SSA</title>
 </head>
 <body>
@@ -21,13 +22,9 @@
     </div>
 </th:block>
 
-<p th:text="|${calendar.month.value}月|" style="
-    font-size: x-large;
-    text-align: center;
-    margin-top: 40px;
-"/>
-<table border="3" width="90%">
-    <tr>
+<p th:text="|${calendar.month.value}月|" class="month"/>
+<table border="3" width="90%" align="center" class="calendar">
+    <tr class="column day-of-week">
         <td><p>MON</p></td>
         <td><p>TUE</p></td>
         <td><p>WED</p></td>
@@ -36,8 +33,11 @@
         <td><p>SAT</p></td>
         <td><p>SUN</p></td>
     </tr>
-    <tr th:each="weekNum : ${#numbers.sequence(0, calendar.days.size()/7 - 1)}">
-        <td th:each="dayNum : ${#numbers.sequence(0, 6)}" th:text="${#temporals.format(calendar.days[weekNum * 7 + dayNum].date, 'dd')}"></td>
+    <tr class="column" th:each="weekNum : ${#numbers.sequence(0, calendar.days.size()/7 - 1)}">
+        <td th:each="dayNum : ${#numbers.sequence(0, 6)}">
+            <div th:text="${#temporals.format(calendar.days[weekNum * 7 + dayNum].date, 'dd')}" class="date"/>
+            <div class="date"><span th:each="plan : ${calendar.days[weekNum * 7 + dayNum].plans}" class="plan-icon"></span></div>
+        </td>
     </tr>
 </table>
 
