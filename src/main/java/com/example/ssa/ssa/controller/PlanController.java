@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +64,12 @@ public class PlanController {
                          Model model) {
         LoginUser loginUser = loginUserDetails.getLoginUser();
         if (result.hasErrors()) {
+            return "plan/input";
+        }
+        // 開始日時より終了日時の方が早い場合、エラー
+        if (LocalDateTime.parse(form.getStartDate().concat(" ").concat(form.getStartTime()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                .isAfter(LocalDateTime.parse(form.getEndDate().concat(" ").concat(form.getEndTime()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))) {
+            model.addAttribute("dateErrorMessage", messageSource.getMessage("plan.dateError", null, Locale.getDefault()));
             return "plan/input";
         }
         // 参加していないルームIDの場合、エラー
