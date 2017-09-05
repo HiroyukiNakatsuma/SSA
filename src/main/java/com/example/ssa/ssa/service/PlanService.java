@@ -3,6 +3,7 @@ package com.example.ssa.ssa.service;
 import com.example.ssa.ssa.domain.mapper.PlanMapper;
 import com.example.ssa.ssa.domain.model.CalendarWithPlan;
 import com.example.ssa.ssa.domain.model.Day;
+import com.example.ssa.ssa.domain.model.Plan;
 import javassist.tools.web.BadHttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,17 @@ public class PlanService {
                 .forEach(targetDate -> {
                     days.add(new Day(targetDate,
                             targetDate.isEqual(now),
-                            planMapper.selectListOfDay(roomId, targetDate)));
+                            getListOfDate(roomId, targetDate)));
                     targetDate.plusDays(1);
                 });
         return new CalendarWithPlan(now.getMonth(), days);
+    }
+
+    /**
+     * 指定した日付の予定を取得
+     */
+    public List<Plan> getListOfDate(Long roomId, LocalDate targetDate) {
+        return planMapper.selectListOfDay(roomId, targetDate);
     }
 
     /**

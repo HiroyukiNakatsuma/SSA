@@ -48,9 +48,9 @@ public class PlanController {
         }
         form.setRoomId(roomId);
         form.setStartDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        form.setStartTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        form.setStartTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         form.setEndDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        form.setEndTime(LocalTime.now().plusHours(1).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        form.setEndTime(LocalTime.now().plusHours(1).format(DateTimeFormatter.ofPattern("HH:mm")));
         return "plan/input";
     }
 
@@ -89,5 +89,24 @@ public class PlanController {
                 loginUser.getAccountId());
         model.addAttribute("createPlanMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));
         return "redirect:/room/detail/" + form.getRoomId();
+    }
+
+    /**
+     * 予定一覧画面表示
+     */
+    @GetMapping("/list/{roomId}")
+    public String list(@PathVariable Long roomId,
+                       @RequestParam String targetDate,
+                       @AuthenticationPrincipal LoginUserDetails loginUserDetails,
+                       Model model) {
+        // 参加していないルームIDの場合、エラー
+        if (!roomService.isJoined(loginUserDetails.getLoginUser().getAccountId(), roomId)) {
+            model.addAttribute("notJoinedMessage", messageSource.getMessage("plan.notJoined", null, Locale.getDefault()));
+            return "plan/input";
+        }
+        // 予定情報取得
+        model.addAttribute("planList", planService.getListOfDate(roomId, LocalDate.parse(targetDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+        model.addAttribute("targetDate", targetDate);
+        return "plan/list";
     }
 }

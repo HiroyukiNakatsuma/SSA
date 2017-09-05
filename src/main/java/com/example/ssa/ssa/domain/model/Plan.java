@@ -14,4 +14,5 @@ public class Plan {
     private LocalTime startTime;
     private LocalDate endDate;
     private LocalTime endTime;
+    private String memo;
 }
