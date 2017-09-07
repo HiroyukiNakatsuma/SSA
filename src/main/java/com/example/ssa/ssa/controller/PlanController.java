@@ -37,15 +37,7 @@ public class PlanController {
      */
     @GetMapping("/input")
     public String input(@ModelAttribute PlanCreateForm form,
-                        @RequestParam Long roomId,
-                        @AuthenticationPrincipal LoginUserDetails loginUserDetails,
-                        Model model) {
-        // 参加していないルームIDの場合、エラー
-        if (!roomService.isJoined(loginUserDetails.getLoginUser().getAccountId(), roomId)) {
-            model.addAttribute("detail", roomService.loadDetail(roomId));
-            model.addAttribute("notJoinedMessage", messageSource.getMessage("plan.notJoined", null, Locale.getDefault()));
-            return "room/detail";
-        }
+                        @RequestParam Long roomId) {
         form.setRoomId(roomId);
         form.setStartDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         form.setStartTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -67,26 +59,25 @@ public class PlanController {
             return "plan/input";
         }
         // 開始日時より終了日時の方が早い場合、エラー
+        // TODO フォームバリデーションに移管
         if (LocalDateTime.parse(form.getStartDate().concat(" ").concat(form.getStartTime()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 .isAfter(LocalDateTime.parse(form.getEndDate().concat(" ").concat(form.getEndTime()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))) {
             model.addAttribute("dateErrorMessage", messageSource.getMessage("plan.dateError", null, Locale.getDefault()));
             return "plan/input";
         }
-        // 参加していないルームIDの場合、エラー
-        if (!roomService.isJoined(loginUser.getAccountId(), form.getRoomId())) {
-            model.addAttribute("notJoinedMessage", messageSource.getMessage("plan.notJoined", null, Locale.getDefault()));
+        try {
+            planService.create(
+                    form.getRoomId(),
+                    form.getTitle(),
+                    LocalDate.parse(form.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    LocalTime.parse(form.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    LocalDate.parse(form.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    LocalTime.parse(form.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    form.getMemo(),
+                    loginUser.getAccountId());
+        } catch (Exception e) {
             return "plan/input";
         }
-        // 予定作成
-        planService.create(
-                form.getRoomId(),
-                form.getTitle(),
-                LocalDate.parse(form.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                LocalTime.parse(form.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
-                LocalDate.parse(form.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                LocalTime.parse(form.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
-                form.getMemo(),
-                loginUser.getAccountId());
         model.addAttribute("createPlanMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));
         return "redirect:/room/detail/" + form.getRoomId();
     }
@@ -99,13 +90,10 @@ public class PlanController {
                        @RequestParam String targetDate,
                        @AuthenticationPrincipal LoginUserDetails loginUserDetails,
                        Model model) {
-        // 参加していないルームIDの場合、エラー
         if (!roomService.isJoined(loginUserDetails.getLoginUser().getAccountId(), roomId)) {
-            model.addAttribute("notJoinedMessage", messageSource.getMessage("plan.notJoined", null, Locale.getDefault()));
             return "plan/input";
         }
-        // 予定情報取得
-        model.addAttribute("planList", planService.getListOfDate(roomId, LocalDate.parse(targetDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+        model.addAttribute("planList", planService.loadListOfDate(roomId, LocalDate.parse(targetDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         model.addAttribute("targetDate", targetDate);
         return "plan/list";
     }

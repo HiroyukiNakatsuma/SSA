@@ -1,8 +1,8 @@
 package com.example.ssa.ssa.service;
 
 import com.example.ssa.ssa.WebSecurityConfig;
-import com.example.ssa.ssa.domain.model.Account;
 import com.example.ssa.ssa.domain.mapper.AccountMapper;
+import com.example.ssa.ssa.domain.model.Account;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +26,17 @@ public class AccountService {
     /**
      * メールアドレスによるアカウントの存在チェック
      */
-    public boolean isExistsByMailAddress(String mailAddress) {
+    public boolean isAlreadyExistsMailAddress(String mailAddress) {
         return accountMapper.selectExistsByMailAddress(mailAddress);
     }
 
     /**
      * 新規会員登録処理
+     * パスワードはハッシュ化して登録する
+     *
+     * @param mailAddress メールアドレス
+     * @param password    パスワード
+     * @return
      */
     @Transactional
     public Long register(String mailAddress, String password) {
@@ -44,7 +49,7 @@ public class AccountService {
      * ニックネーム登録
      */
     @Transactional
-    public void setNickname(Long accountId, String nickname) {
+    public void registerNickname(Long accountId, String nickname) {
         accountMapper.updateNickname(accountId, nickname);
     }
 

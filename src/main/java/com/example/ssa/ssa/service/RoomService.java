@@ -2,19 +2,17 @@ package com.example.ssa.ssa.service;
 
 import com.example.ssa.ssa.component.util.SsaUtil;
 import com.example.ssa.ssa.component.util.UrlUtil;
-import com.example.ssa.ssa.domain.model.Room;
-import com.example.ssa.ssa.domain.model.RoomDetail;
-import com.example.ssa.ssa.enums.RoomRole;
 import com.example.ssa.ssa.domain.mapper.AccountJoinRoomMapper;
 import com.example.ssa.ssa.domain.mapper.OnetimeKeyMapper;
 import com.example.ssa.ssa.domain.mapper.RoomMapper;
-import lombok.Data;
+import com.example.ssa.ssa.domain.model.Room;
+import com.example.ssa.ssa.domain.model.RoomDetail;
+import com.example.ssa.ssa.enums.RoomRole;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
 import java.util.List;
 
 @Slf4j
@@ -68,15 +66,15 @@ public class RoomService {
 
     /**
      * ルーム招待URL発行
+     * ランダムキーを生成してDBに登録
      *
      * @param roomId    ルームID
      * @param accountId 会員ID
-     * @return 招待URL
+     * @return ランダムキーを使用した招待URL
      */
     @Transactional
     public String createInviteLink(long roomId, long accountId) {
         String randomKey = ssaUtil.createHashedString();
-        // ランダムキー登録
         onetimeKeyMapper.insert(roomId, accountId, randomKey);
         return urlUtil.getBaseUrl() + "/room/inviteJoin/" + randomKey;
     }
@@ -86,10 +84,7 @@ public class RoomService {
      */
     @Transactional
     public Long inviteJoin(String onetimeKey, long accountId) {
-        // ワンタイムキーが有効かチェック
         Long roomId = onetimeKeyMapper.isValid(onetimeKey);
-
-        // ルーム参加処理
         if (roomId != null && !isJoined(accountId, roomId)) {
             accountJoinRoomMapper.insert(accountId, roomId, RoomRole.MEMBER.getCode());
             onetimeKeyMapper.updateUsedFlag(onetimeKey);

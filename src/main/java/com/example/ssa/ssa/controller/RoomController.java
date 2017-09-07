@@ -1,7 +1,6 @@
 package com.example.ssa.ssa.controller;
 
 import com.example.ssa.ssa.component.security.LoginUserDetails;
-import com.example.ssa.ssa.component.util.UrlUtil;
 import com.example.ssa.ssa.controller.form.RoomCreateForm;
 import com.example.ssa.ssa.service.PlanService;
 import com.example.ssa.ssa.service.RoomService;
@@ -15,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/room")
@@ -81,11 +80,9 @@ public class RoomController {
     public String createInviteLink(@RequestParam("roomId") Long roomId,
                                    @AuthenticationPrincipal LoginUserDetails loginUserDetails,
                                    Model model) {
-        // roomIdが有効か
         if (roomId == null || !roomService.isValid(roomId)) {
             return "room/list";
         }
-        // ワンタイムキーを発行してリンク生成
         model.addAttribute("inviteLinkUrl", roomService.createInviteLink(roomId, loginUserDetails.getLoginUser().getAccountId()));
         return "room/inviteLink";
     }
@@ -97,7 +94,6 @@ public class RoomController {
     public String inviteJoin(@PathVariable String onetimeKey,
                              @AuthenticationPrincipal LoginUserDetails loginUserDetails,
                              RedirectAttributes redirectAttributes) {
-        // ルーム参加
         Long roomId = roomService.inviteJoin(onetimeKey, loginUserDetails.getLoginUser().getAccountId());
         if (roomId == null) {
             redirectAttributes.addFlashAttribute("invalidMessage", messageSource.getMessage("room.invite.invalid", null, Locale.getDefault()));

@@ -36,12 +36,11 @@ public class AccountController {
         if (result.hasErrors()) {
             return "account/input";
         }
-        // メアド被りチェック
-        if (accountService.isExistsByMailAddress(form.getMailAddress())) {
+        if (accountService.isAlreadyExistsMailAddress(form.getMailAddress())) {
             model.addAttribute("mailAddressError", true);
             return "account/input";
         }
-        // 登録処理
+
         Long accountId = accountService.register(form.getMailAddress(), form.getPassword());
 
         redirectAttributes.addFlashAttribute("accountId", accountId);
@@ -65,7 +64,7 @@ public class AccountController {
         if (result.hasErrors()) {
             return "account/start";
         }
-        accountService.setNickname(form.getAccountId(), form.getNickname());
+        accountService.registerNickname(form.getAccountId(), form.getNickname());
         return "redirect:/";
     }
 

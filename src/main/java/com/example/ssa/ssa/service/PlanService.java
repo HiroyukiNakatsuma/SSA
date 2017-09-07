@@ -31,8 +31,6 @@ public class PlanService {
      * ルームの今月の予定をカレンダーとして取得
      */
     public CalendarWithPlan loadCalendarWithPlan(long roomId, long accountId) throws Exception {
-        // ルームの存在チェック
-        // ルームに参加しているかチェック
         if (!roomService.isValid(roomId) || !roomService.isJoined(accountId, roomId)) {
             throw new BadHttpRequest();
         }
@@ -54,7 +52,7 @@ public class PlanService {
                 .forEach(targetDate -> {
                     days.add(new Day(targetDate,
                             targetDate.isEqual(now),
-                            getListOfDate(roomId, targetDate)));
+                            loadListOfDate(roomId, targetDate)));
                     targetDate.plusDays(1);
                 });
         return new CalendarWithPlan(now.getMonth(), days);
@@ -63,7 +61,7 @@ public class PlanService {
     /**
      * 指定した日付の予定を取得
      */
-    public List<Plan> getListOfDate(Long roomId, LocalDate targetDate) {
+    public List<Plan> loadListOfDate(Long roomId, LocalDate targetDate) {
         return planMapper.selectListOfDay(roomId, targetDate);
     }
 
@@ -78,7 +76,10 @@ public class PlanService {
                        LocalDate endDate,
                        LocalTime endTime,
                        String memo,
-                       long accountId) {
+                       long accountId) throws Exception {
+        if (roomService.isJoined(accountId, roomId)) {
+            throw new BadHttpRequest();
+        }
         planMapper.insert(roomId, title, startDate, startTime, endDate, endTime, memo, accountId);
     }
 }
