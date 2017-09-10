@@ -4,7 +4,7 @@ import com.example.ssa.ssa.domain.mapper.PlanMapper;
 import com.example.ssa.ssa.domain.model.CalendarWithPlan;
 import com.example.ssa.ssa.domain.model.Day;
 import com.example.ssa.ssa.domain.model.Plan;
-import javassist.tools.web.BadHttpRequest;
+import com.example.ssa.ssa.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class PlanService {
      */
     public CalendarWithPlan loadCalendarWithPlan(long roomId, long accountId) throws Exception {
         if (!roomService.isValid(roomId) || !roomService.isJoined(accountId, roomId)) {
-            throw new BadHttpRequest();
+            throw new BadRequestException();
         }
 
         LocalDate now = LocalDate.now();
@@ -78,7 +78,7 @@ public class PlanService {
                        String memo,
                        long accountId) throws Exception {
         if (roomService.isJoined(accountId, roomId)) {
-            throw new BadHttpRequest();
+            throw new BadRequestException();
         }
         planMapper.insert(roomId, title, startDate, startTime, endDate, endTime, memo, accountId);
     }

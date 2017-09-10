@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>Error - SSA</title>
+</head>
+<body>
+
+<h1 th:text="|Error - ${status}|"></h1>
+<p th:text="|${error}|"></p>
+
+</body>
+</html>
