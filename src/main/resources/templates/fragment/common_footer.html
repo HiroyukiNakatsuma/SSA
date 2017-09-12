@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="common_footer">
-    <div><a th:href="@{|/home|}">HOMEへ</a></div>
-    <div class="footer">
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
+    <footer class="footer" style="border-top: solid 5px darkgray;margin-top: 30px;">
+        <p>SSA - Schedule Share App</p>
+    </footer>
 </th:block>
 
 </html>

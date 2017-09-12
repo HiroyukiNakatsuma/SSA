@@ -1,25 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <title>Top - SSA</title>
 </head>
 <body>
 <div class="container" style="margin-top: 30px;">
-    <div class="header clearfix" style="margin-bottom: 10px;">
-        <nav>
-            <ul class="nav nav-pills float-right">
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/home}">MyTop</a>
-                </li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">SSA</h3>
-    </div>
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
     <div class="jumbotron" style="text-align: center;">
         <h1 class="display-5">スケジュールシェアアプリ</h1>
         <p class="lead">特定の人とのプライベートな予定を共有することができます。</p>
@@ -36,9 +23,7 @@
             <p>ルームに家族や友達を招待できます。</p>
         </div>
     </div>
-    <footer class="footer" style="border-top: solid 5px darkgray;">
-        <p>SSA - Schedule Share App</p>
-    </footer>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
 </div>
 </body>
 </html>
