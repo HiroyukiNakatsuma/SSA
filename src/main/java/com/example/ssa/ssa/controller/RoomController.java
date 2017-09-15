@@ -99,7 +99,7 @@ public class RoomController {
             redirectAttributes.addFlashAttribute("invalidMessage", messageSource.getMessage("room.invite.invalid", null, Locale.getDefault()));
             return "redirect:/home/";
         }
-        redirectAttributes.addFlashAttribute("roomJoinMessage", messageSource.getMessage("room.invite.join", null, Locale.getDefault()));
+        redirectAttributes.addFlashAttribute("successMessage", messageSource.getMessage("room.invite.join", null, Locale.getDefault()));
         return "redirect:/room/detail/" + roomId;
     }
 

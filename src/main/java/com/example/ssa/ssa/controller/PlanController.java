@@ -76,7 +76,7 @@ public class PlanController {
         } catch (Exception e) {
             return "plan/input";
         }
-        model.addAttribute("createPlanMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));
+        model.addAttribute("successMessage", messageSource.getMessage("plan.create.success", null, Locale.getDefault()));
         return "redirect:/room/detail/" + form.getRoomId();
     }
 
