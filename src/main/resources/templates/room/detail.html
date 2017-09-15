@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <link rel="stylesheet" type="text/css" th:href="@{|/css/room/detail.css|}" media="all"/>
@@ -45,6 +44,8 @@
     <input type="hidden" name="roomId" th:value="${detail.roomId}"/>
     <div><input type="submit" value="このルームの招待リンクを生成する"/></div>
 </form>
+
+<div><a th:href="@{|/album/${detail.roomId}|}">アルバムを見る</a></div>
 
 <div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
 

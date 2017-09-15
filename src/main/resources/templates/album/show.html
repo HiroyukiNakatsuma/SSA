@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <script src="/js/album/input.js" th:src="@{|/js/album/input.js|}"></script>
+    <title>アルバム - SSA</title>
+</head>
+<body>
+
+<h1 th:inline="text">アルバム画面</h1>
+
+<form id="imageForm" method="post" th:action="@{|/album/${roomId}/input|}">
+    <input id="files" type="file" name="images[]" multiple="multiple"/>
+</form>
+
+<div><button class="js-image-upload">画像をアップロード</button></div>
+
+<th:block th:include="fragment/common_footer :: common_footer"></th:block>
+
+</body>
+</html>
