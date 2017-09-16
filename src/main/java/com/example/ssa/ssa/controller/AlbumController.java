@@ -1,5 +1,6 @@
 package com.example.ssa.ssa.controller;
 
+import com.example.ssa.ssa.controller.form.ImageInputForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class AlbumController {
         return "album/show";
     }
 
-    @PostMapping("/{roomId}/input")
-    public String imageInput() {
-        return "";
+    @PostMapping("/input")
+    public String imageInput(ImageInputForm form) {
+        return "album/show";
     }
 }
