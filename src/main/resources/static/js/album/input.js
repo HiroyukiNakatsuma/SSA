@@ -10,12 +10,13 @@ $(() => {
     });
 
     $('#js-image-upload').on('click', function() {
+        const roomId = Number($('body').data('roomid'));
         const imageInputForm = $('#imageInputForm')[0];
         const formData = new FormData(imageInputForm);
 
         $.ajax({
             type: 'POST',
-            url: '/album/input',
+            url: `/album/input/${roomId}`,
             data: formData,
             processData: false,
             contentType: false
