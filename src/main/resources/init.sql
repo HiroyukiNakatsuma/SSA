@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS ssa.Schedule;
 
 DROP TABLE IF EXISTS ssa.OnetimeKey;
 
+DROP TABLE IF EXISTS ssa.Photo;
+
 DROP TABLE IF EXISTS ssa.Plan;
 
 DROP TABLE IF EXISTS ssa.Room;
@@ -17,7 +19,6 @@ CREATE TABLE ssa.Account (
     nickname VARCHAR(60) NULL DEFAULT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
-
 CREATE TABLE ssa.Room (
     roomId BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     roomName VARCHAR(60) NULL,
@@ -25,7 +26,6 @@ CREATE TABLE ssa.Room (
     createdAt DATETIME NOT NULL,
     updatedAt DATETIME NOT NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-
 
 CREATE TABLE ssa.AccountJoinRoom (
     accountJoinRoomId BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -37,7 +37,6 @@ CREATE TABLE ssa.AccountJoinRoom (
     UNIQUE `unique_index`(`accountId`, `roomId`)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
-
 CREATE TABLE ssa.OnetimeKey (
     onetimeKey VARCHAR(32) NOT NULL PRIMARY KEY,
     roomId BIGINT(20) NOT NULL,
@@ -48,7 +47,6 @@ CREATE TABLE ssa.OnetimeKey (
     FOREIGN KEY(roomId) REFERENCES Room(roomId),
     FOREIGN KEY(createdAccountId) REFERENCES Account(accountId)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-
 
 CREATE TABLE ssa.Plan (
     planId BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -66,5 +64,15 @@ CREATE TABLE ssa.Plan (
     FOREIGN KEY(createdAccountId) REFERENCES Account(accountId)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
+CREATE TABLE ssa.Photo (
+    photoId BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    roomId BIGINT(20) NULL,
+    imagePath VARCHAR(255) NOT NULL,
+    postedAccountId BIGINT(20) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    FOREIGN KEY(roomId) REFERENCES Room(roomId),
+    FOREIGN KEY(postedAccountId) REFERENCES Account(accountId)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 INSERT INTO ssa.Account (mailAddress, password, nickname) VALUES ("ssa@test.com", "$2a$10$orHIcqd9rp4MQFgAmSa23uROJIoGx2x0hWJZkazEj9Ii1BPY7KMba", "testAccount01");
