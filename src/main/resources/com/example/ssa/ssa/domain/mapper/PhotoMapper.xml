@@ -3,6 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.ssa.ssa.domain.mapper.PhotoMapper">
+
+    <select id="loadListByRoomId" resultType="com.example.ssa.ssa.domain.model.Photo">
+        SELECT
+            photoId,
+            roomId,
+            imagePath,
+            postedAccountId,
+            createdAt
+        FROM
+            Photo
+        WHERE
+            roomId = #{roomId}
+        ORDER BY
+            createdAt DESC
+    </select>
+
     <insert id="insert">
         INSERT INTO
         Photo (

@@ -70,7 +70,6 @@ CREATE TABLE ssa.Photo (
     imagePath VARCHAR(255) NOT NULL,
     postedAccountId BIGINT(20) NOT NULL,
     createdAt DATETIME NOT NULL,
-    updatedAt DATETIME NOT NULL,
     FOREIGN KEY(roomId) REFERENCES Room(roomId),
     FOREIGN KEY(postedAccountId) REFERENCES Account(accountId)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;

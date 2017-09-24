@@ -1,6 +1,7 @@
 package com.example.ssa.ssa.service;
 
 import com.example.ssa.ssa.domain.mapper.PhotoMapper;
+import com.example.ssa.ssa.domain.model.Photo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,6 +31,10 @@ public class AlbumService {
 
     private static final Logger logger = LoggerFactory.getLogger(AlbumService.class);
     private static final String BASE_PHOTO_PATH = "/Users/Shared/ssa/data/photo/";
+
+    public List<Photo> loadList(long roomId) {
+        return photoMapper.loadListByRoomId(roomId);
+    }
 
     /**
      * 選択された複数のアルバム写真画像をアップロード

@@ -28,7 +28,14 @@ public class AlbumController {
      * アルバム画面表示
      */
     @GetMapping("/{roomId}")
-    public String show(@PathVariable Long roomId, Model model) {
+    public String show(@PathVariable Long roomId,
+                       @AuthenticationPrincipal LoginUserDetails loginUserDetails,
+                       Model model) {
+        long accountId = loginUserDetails.getLoginUser().getAccountId();
+        if (!(roomService.isValid(roomId) && roomService.isJoined(accountId, roomId))) {
+            throw new BadRequestException();
+        }
+        model.addAttribute("photoList", albumService.loadList(roomId));
         model.addAttribute("roomId", roomId);
         return "album/show";
     }
