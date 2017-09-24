@@ -25,13 +25,11 @@
             roomId,
             imagePath,
             postedAccountId,
-            createdAt,
-            updatedAt
+            createdAt
         ) VALUES (
             #{roomId},
             #{imagePath},
             #{postedAccountId},
-            now(),
             now()
         )
     </insert>

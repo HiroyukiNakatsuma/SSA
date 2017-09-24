@@ -4,8 +4,6 @@ import com.example.ssa.ssa.domain.mapper.PhotoMapper;
 import com.example.ssa.ssa.domain.model.Photo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +27,6 @@ public class AlbumService {
     @Autowired
     private PhotoMapper photoMapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(AlbumService.class);
     private static final String BASE_PHOTO_PATH = "/Users/Shared/ssa/data/photo/";
 
     public List<Photo> loadList(long roomId) {
@@ -44,7 +41,7 @@ public class AlbumService {
      * @param roomId    ルームID
      * @param accountId 会員ID
      */
-    @Transactional(rollbackFor = IOException.class)
+    @Transactional(rollbackFor = UncheckedIOException.class)
     public void postPhoto(MultipartFile[] files, long roomId, long accountId) {
         Arrays.stream(files).forEach(file -> {
             try {
@@ -72,14 +69,14 @@ public class AlbumService {
             filePath = Paths.get(fileDir, file.getOriginalFilename());
             Files.createFile(filePath);
         } catch (IOException e) {
-            logger.error(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
+            log.info(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
             throw new IOException(e);
         }
         try (OutputStream os = Files.newOutputStream(filePath, StandardOpenOption.CREATE)) {
             byte[] bytes = file.getBytes();
             os.write(bytes);
         } catch (IOException e) {
-            logger.error(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
+            log.info(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
             throw new IOException(e);
         }
         return filePath.toString();
