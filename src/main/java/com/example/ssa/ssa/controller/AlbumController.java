@@ -24,13 +24,18 @@ public class AlbumController {
     @Autowired
     private RoomService roomService;
 
+    /**
+     * アルバム画面表示
+     */
     @GetMapping("/{roomId}")
-    public String show(@PathVariable Long roomId,
-                       Model model) {
+    public String show(@PathVariable Long roomId, Model model) {
         model.addAttribute("roomId", roomId);
         return "album/show";
     }
 
+    /**
+     * アルバム写真投稿処理
+     */
     @PostMapping("/input/{roomId}")
     public String imageInput(@Validated ImageInputForm form,
                              BindingResult result,
