@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="ssa" schema="ssa" type="MySQL - 5.7.19">
+   <tables>
+      <table catalog="ssa" name="Account" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" digits="0" id="0" name="accountId" nullable="false" remarks="" size="19" type="BIGINT">
+            <child catalog="ssa" column="accountId" foreignKey="accountjoinroom_ibfk_1" implied="false" onDeleteCascade="false" table="AccountJoinRoom"/>
+            <child catalog="ssa" column="createdAccountId" foreignKey="onetimekey_ibfk_2" implied="false" onDeleteCascade="false" table="OnetimeKey"/>
+            <child catalog="ssa" column="postedAccountId" foreignKey="photo_ibfk_2" implied="false" onDeleteCascade="false" table="Photo"/>
+            <child catalog="ssa" column="createdAccountId" foreignKey="plan_ibfk_2" implied="false" onDeleteCascade="false" table="Plan"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="mailAddress" nullable="false" remarks="" size="255" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="2" name="password" nullable="false" remarks="" size="60" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="3" name="nickname" nullable="true" remarks="" size="60" type="VARCHAR"/>
+         <primaryKey column="accountId" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="accountId"/>
+         </index>
+         <index name="mailAddress" unique="true">
+            <column ascending="true" name="mailAddress"/>
+         </index>
+      </table>
+      <table catalog="ssa" name="AccountJoinRoom" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" digits="0" id="0" name="accountJoinRoomId" nullable="false" remarks="" size="19" type="BIGINT"/>
+         <column autoUpdated="false" digits="0" id="1" name="accountId" nullable="false" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="accountId" foreignKey="accountjoinroom_ibfk_1" implied="false" onDeleteCascade="false" table="Account"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="roomId" nullable="false" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="roomId" foreignKey="accountjoinroom_ibfk_2" implied="false" onDeleteCascade="false" table="Room"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="roomRole" nullable="false" remarks="" size="3" type="TINYINT"/>
+         <primaryKey column="accountJoinRoomId" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="accountJoinRoomId"/>
+         </index>
+         <index name="roomId" unique="false">
+            <column ascending="true" name="roomId"/>
+         </index>
+         <index name="unique_index" unique="true">
+            <column ascending="true" name="accountId"/>
+            <column ascending="true" name="roomId"/>
+         </index>
+      </table>
+      <table catalog="ssa" name="OnetimeKey" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="onetimeKey" nullable="false" remarks="" size="32" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="1" name="roomId" nullable="false" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="roomId" foreignKey="onetimekey_ibfk_1" implied="false" onDeleteCascade="false" table="Room"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="createdAccountId" nullable="false" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="accountId" foreignKey="onetimekey_ibfk_2" implied="false" onDeleteCascade="false" table="Account"/>
+         </column>
+         <column autoUpdated="false" defaultValue="b'0'" digits="0" id="3" name="usedFlag" nullable="false" remarks="" size="1" type="BIT"/>
+         <column autoUpdated="false" digits="0" id="4" name="createdAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <column autoUpdated="false" digits="0" id="5" name="updatedAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <primaryKey column="onetimeKey" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="onetimeKey"/>
+         </index>
+         <index name="createdAccountId" unique="false">
+            <column ascending="true" name="createdAccountId"/>
+         </index>
+         <index name="roomId" unique="false">
+            <column ascending="true" name="roomId"/>
+         </index>
+      </table>
+      <table catalog="ssa" name="Photo" numRows="2" remarks="" type="TABLE">
+         <column autoUpdated="true" digits="0" id="0" name="photoId" nullable="false" remarks="" size="19" type="BIGINT"/>
+         <column autoUpdated="false" digits="0" id="1" name="roomId" nullable="true" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="roomId" foreignKey="photo_ibfk_1" implied="false" onDeleteCascade="false" table="Room"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="imagePath" nullable="false" remarks="" size="255" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="3" name="postedAccountId" nullable="false" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="accountId" foreignKey="photo_ibfk_2" implied="false" onDeleteCascade="false" table="Account"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="createdAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <primaryKey column="photoId" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="photoId"/>
+         </index>
+         <index name="postedAccountId" unique="false">
+            <column ascending="true" name="postedAccountId"/>
+         </index>
+         <index name="roomId" unique="false">
+            <column ascending="true" name="roomId"/>
+         </index>
+      </table>
+      <table catalog="ssa" name="Plan" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" digits="0" id="0" name="planId" nullable="false" remarks="" size="19" type="BIGINT"/>
+         <column autoUpdated="false" digits="0" id="1" name="roomId" nullable="true" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="roomId" foreignKey="plan_ibfk_1" implied="false" onDeleteCascade="false" table="Room"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="title" nullable="false" remarks="" size="40" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="3" name="startDate" nullable="false" remarks="" size="10" type="DATE"/>
+         <column autoUpdated="false" digits="0" id="4" name="startTime" nullable="true" remarks="" size="8" type="TIME"/>
+         <column autoUpdated="false" digits="0" id="5" name="endDate" nullable="false" remarks="" size="10" type="DATE"/>
+         <column autoUpdated="false" digits="0" id="6" name="endTime" nullable="true" remarks="" size="8" type="TIME"/>
+         <column autoUpdated="false" digits="0" id="7" name="memo" nullable="true" remarks="" size="100" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="8" name="createdAccountId" nullable="false" remarks="" size="19" type="BIGINT">
+            <parent catalog="ssa" column="accountId" foreignKey="plan_ibfk_2" implied="false" onDeleteCascade="false" table="Account"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="9" name="createdAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <column autoUpdated="false" digits="0" id="10" name="updatedAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <primaryKey column="planId" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="planId"/>
+         </index>
+         <index name="createdAccountId" unique="false">
+            <column ascending="true" name="createdAccountId"/>
+         </index>
+         <index name="roomId" unique="false">
+            <column ascending="true" name="roomId"/>
+         </index>
+      </table>
+      <table catalog="ssa" name="Room" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" digits="0" id="0" name="roomId" nullable="false" remarks="" size="19" type="BIGINT">
+            <child catalog="ssa" column="roomId" foreignKey="accountjoinroom_ibfk_2" implied="false" onDeleteCascade="false" table="AccountJoinRoom"/>
+            <child catalog="ssa" column="roomId" foreignKey="onetimekey_ibfk_1" implied="false" onDeleteCascade="false" table="OnetimeKey"/>
+            <child catalog="ssa" column="roomId" foreignKey="photo_ibfk_1" implied="false" onDeleteCascade="false" table="Photo"/>
+            <child catalog="ssa" column="roomId" foreignKey="plan_ibfk_1" implied="false" onDeleteCascade="false" table="Plan"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="roomName" nullable="true" remarks="" size="60" type="VARCHAR"/>
+         <column autoUpdated="false" defaultValue="b'0'" digits="0" id="2" name="deleteFlag" nullable="false" remarks="" size="1" type="BIT"/>
+         <column autoUpdated="false" digits="0" id="3" name="createdAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <column autoUpdated="false" digits="0" id="4" name="updatedAt" nullable="false" remarks="" size="19" type="DATETIME"/>
+         <primaryKey column="roomId" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="roomId"/>
+         </index>
+      </table>
+      <table catalog="ssa" name="schema_version" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="version_rank" nullable="false" remarks="" size="10" type="INT"/>
+         <column autoUpdated="false" digits="0" id="1" name="installed_rank" nullable="false" remarks="" size="10" type="INT"/>
+         <column autoUpdated="false" digits="0" id="2" name="version" nullable="false" remarks="" size="50" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="3" name="description" nullable="false" remarks="" size="200" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="4" name="type" nullable="false" remarks="" size="20" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="5" name="script" nullable="false" remarks="" size="1000" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="6" name="checksum" nullable="true" remarks="" size="10" type="INT"/>
+         <column autoUpdated="false" digits="0" id="7" name="installed_by" nullable="false" remarks="" size="100" type="VARCHAR"/>
+         <column autoUpdated="false" defaultValue="CURRENT_TIMESTAMP" digits="0" id="8" name="installed_on" nullable="false" remarks="" size="19" type="TIMESTAMP"/>
+         <column autoUpdated="false" digits="0" id="9" name="execution_time" nullable="false" remarks="" size="10" type="INT"/>
+         <column autoUpdated="false" digits="0" id="10" name="success" nullable="false" remarks="" size="0" type="BIT"/>
+         <primaryKey column="version" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="version"/>
+         </index>
+         <index name="schema_version_ir_idx" unique="false">
+            <column ascending="true" name="installed_rank"/>
+         </index>
+         <index name="schema_version_s_idx" unique="false">
+            <column ascending="true" name="success"/>
+         </index>
+         <index name="schema_version_vr_idx" unique="false">
+            <column ascending="true" name="version_rank"/>
+         </index>
+      </table>
+   </tables>
+</database>
