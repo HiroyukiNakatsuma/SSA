@@ -5,3 +5,9 @@
 /gradle/
 /gradlew
 /gradlew.bat
+/.DS_Store
+/src/.DS_Store
+/src/main/.DS_Store
+/src/main/resources/.DS_Store
+/src/main/resources/db/schemaspy/mysql-connector-java-5.1.42.jar
+/ssa/src/main/resources/db/schemaspy/schemaspy-6.0.0-rc2.jar
