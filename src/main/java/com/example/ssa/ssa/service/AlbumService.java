@@ -1,5 +1,6 @@
 package com.example.ssa.ssa.service;
 
+import com.example.ssa.ssa.component.properties.UrlProperties;
 import com.example.ssa.ssa.domain.mapper.PhotoMapper;
 import com.example.ssa.ssa.domain.model.Photo;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +27,13 @@ import java.util.List;
 public class AlbumService {
     @Autowired
     private PhotoMapper photoMapper;
-
-    private static final String BASE_PHOTO_PATH = "/Users/Shared/ssa/data/photo/";
+    @Autowired
+    private UrlProperties urlProperties;
 
     public List<Photo> loadList(long roomId) {
-        return photoMapper.loadListByRoomId(roomId);
+        List<Photo> photos = photoMapper.loadListByRoomId(roomId);
+        photos.forEach(photo -> photo.setImageUrl(urlProperties.getImage().getPhoto() + photo.getImagePath()));
+        return photos;
     }
 
     /**
@@ -66,7 +69,7 @@ public class AlbumService {
         Path filePath;
         try {
             Files.createDirectory(Paths.get(fileDir));
-            filePath = Paths.get(fileDir, file.getOriginalFilename());
+            filePath = Paths.get(urlProperties.getImage().getPhoto() + fileDir + file.getOriginalFilename());
             Files.createFile(filePath);
         } catch (IOException e) {
             log.info(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
@@ -79,7 +82,7 @@ public class AlbumService {
             log.info(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
             throw new IOException(e);
         }
-        return filePath.toString();
+        return fileDir + "/" + file.getOriginalFilename();
     }
 
     /**
@@ -91,6 +94,6 @@ public class AlbumService {
      */
     private String createPath(Long id) {
         String now = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now());
-        return BASE_PHOTO_PATH + DigestUtils.sha256Hex(id.toString() + now);
+        return DigestUtils.sha256Hex(id.toString() + now);
     }
 }

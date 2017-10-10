@@ -56,6 +56,6 @@ public class AlbumController {
             return "album/show";
         }
         albumService.postPhoto(form.getFiles(), roomId, accountId);
-        return "album/show";
+        return "redirect:/album/" + roomId;
     }
 }

@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row">
             <div th:if="${photoList.size()} > 0" th:each="photo : ${photoList}" class="card">
-                <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" th:src="${photo.imagePath}" data-holder-rendered="true"/>
+                <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" th:src="${photo.imageUrl}" data-holder-rendered="true"/>
                 <p class="card-text">Photo01</p>
             </div>
         </div>

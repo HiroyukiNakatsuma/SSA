@@ -11,4 +11,5 @@ public class Photo {
     private String imagePath;
     private long postedAccountId;
     private LocalDateTime createdAt;
+    private String imageUrl;
 }
