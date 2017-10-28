@@ -8,14 +8,8 @@ import javax.validation.constraints.NotNull;
 public class UrlProperties {
 
     @NotNull
-    private String base;
+    private String root;
     @NotNull
-    private Image image;
-
-    @Data
-    public static class Image {
-        @NotNull
-        private String photo;
-    }
+    private String photo;
 
 }

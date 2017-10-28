@@ -32,7 +32,7 @@ public class AlbumService {
 
     public List<Photo> loadList(long roomId) {
         List<Photo> photos = photoMapper.loadListByRoomId(roomId);
-        photos.forEach(photo -> photo.setImageUrl(urlProperties.getImage().getPhoto() + photo.getImagePath()));
+        photos.forEach(photo -> photo.setImageUrl(urlProperties.getPhoto() + photo.getImagePath()));
         return photos;
     }
 
@@ -68,8 +68,8 @@ public class AlbumService {
         String fileDir = createPath(roomId);
         Path filePath;
         try {
-            Files.createDirectory(Paths.get(fileDir));
-            filePath = Paths.get(urlProperties.getImage().getPhoto() + fileDir + file.getOriginalFilename());
+            Files.createDirectory(Paths.get(urlProperties.getRoot(), urlProperties.getPhoto() + fileDir));
+            filePath = Paths.get(urlProperties.getRoot(), urlProperties.getPhoto() + fileDir, file.getOriginalFilename());
             Files.createFile(filePath);
         } catch (IOException e) {
             log.info(String.format("画像の登録に失敗しました。 roomId: %s, fileName: %s", roomId, file.getOriginalFilename()));
@@ -93,7 +93,7 @@ public class AlbumService {
      * @return パス文字列
      */
     private String createPath(Long id) {
-        String now = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now());
-        return DigestUtils.sha256Hex(id.toString() + now);
+        return DigestUtils.sha256Hex(id.toString()
+                + DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now()));
     }
 }
