@@ -29,8 +29,13 @@
         </div>
     </div>
 </div>
-<form id="imageInputForm" name="imageInputForm" method="post">
+<form id="imageInputForm" name="imageInputForm" method="post" th:object="${imageInputForm}">
     <input id="files" type="file" name="files" multiple="multiple" accept="image/*"/>
+    <ul>
+        <li th:each="error : ${#fields.detailedErrors()}">
+            <span th:text="${error.message}">Error message</span>
+        </li>
+    </ul>
 </form>
 <div><button id="js-image-upload">画像をアップロード</button></div>
 <th:block th:include="fragment/common_footer :: common_footer"></th:block>

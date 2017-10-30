@@ -19,7 +19,7 @@ public class UploadFileNotEmptyForListValidator implements
 
     @Override
     public boolean isValid(MultipartFile[] files, ConstraintValidatorContext context) {
-        return Arrays.stream(files).anyMatch(file -> !validator.isValid(file, context));
+        return files.length > 0 && Arrays.stream(files).allMatch(file -> !validator.isValid(file, context));
     }
 
 }
