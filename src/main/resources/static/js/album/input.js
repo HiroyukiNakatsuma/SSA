@@ -14,7 +14,7 @@ function imageUpload() {
     }).done((data) => {
         location.href = `/album/${roomId}`;
     }).fail((data) => {
-        $('.album').append('<div class="alert alert-danger">画像の登録に失敗しました。</div>');
+        $('.alert').addClass('alert-danger').text('画像の登録に失敗しました。');
     });
 }
 

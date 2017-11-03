@@ -14,11 +14,13 @@
         <h1 class="jumbotron-heading">フォトアルバム</h1>
         <p class="lead text-muted"></p>
         <div><button id="js-image-upload" class="btn btn-primary">画像をアップロード</button></div>
+        <div>※画像を複数選択できます（最大5枚）</div>
         <form id="imageInputForm" name="imageInputForm" method="post" th:object="${imageInputForm}">
             <input id="files" type="file" name="files" multiple="multiple" accept="image/*" style="display: none;"/>
         </form>
     </div>
 </section>
+<div class="alert"></div>
 <div class="album text-muted">
     <div class="container">
         <div class="row">

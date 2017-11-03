@@ -48,6 +48,7 @@ public class AlbumService {
     /**
      * 選択された複数のアルバム写真画像をアップロード
      * ファイルを格納後に、DB登録
+     * 5枚より多く同時アップロードしようとした場合は、エラー
      *
      * @param files     選択された画像ファイル
      * @param roomId    ルームID
