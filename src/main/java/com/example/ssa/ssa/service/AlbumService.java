@@ -3,6 +3,7 @@ package com.example.ssa.ssa.service;
 import com.example.ssa.ssa.component.properties.UrlProperties;
 import com.example.ssa.ssa.domain.mapper.PhotoMapper;
 import com.example.ssa.ssa.domain.model.Photo;
+import com.example.ssa.ssa.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,9 @@ public class AlbumService {
      */
     @Transactional(rollbackFor = UncheckedIOException.class)
     public void postPhoto(MultipartFile[] files, long roomId, long accountId) {
+        if (files.length > 5) {
+            throw new BadRequestException();
+        }
         Arrays.stream(files).forEach(file -> {
             try {
                 String imagePath = uploadPhotoImage(file, roomId);

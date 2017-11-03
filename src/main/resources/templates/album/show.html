@@ -13,11 +13,11 @@
     <div class="container">
         <h1 class="jumbotron-heading">フォトアルバム</h1>
         <p class="lead text-muted"></p>
-        <form id="imageInputForm" name="imageInputForm" method="post" th:object="${imageInputForm}">
-            <input id="files" type="file" name="files" multiple="multiple" accept="image/*" class="btn btn-primary"/>
-            <ul><li th:each="error : ${#fields.detailedErrors()}"><span th:text="${error.message}">Error message</span></li></ul>
-        </form>
+        <div><button id="js-image-select" class="btn btn-primary">画像ファイルを選択</button></div>
         <div><button id="js-image-upload" class="btn btn-secondary">画像をアップロード</button></div>
+        <form id="imageInputForm" name="imageInputForm" method="post" th:object="${imageInputForm}">
+            <input id="files" type="file" name="files" multiple="multiple" accept="image/*" style="display: none;"/>
+        </form>
     </div>
 </section>
 <div class="album text-muted">

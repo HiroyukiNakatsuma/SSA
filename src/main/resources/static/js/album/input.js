@@ -9,6 +9,10 @@ $(() => {
         xhr.setRequestHeader(header, token);
     });
 
+    $('#js-image-select').on('click', () => {
+        $('#files').click();
+    });
+
     $('#js-image-upload').on('click', function() {
         const roomId = Number($('body').data('roomid'));
         const imageInputForm = $('#imageInputForm')[0];
@@ -21,9 +25,9 @@ $(() => {
             processData: false,
             contentType: false
         }).done((data) => {
-            alert('success!!');
+            location.href = `/album/${roomId}`;
         }).fail((data) => {
-            alert('error!!!');
+            $('.album').append('<div class="alert alert-danger">画像の登録に失敗しました。</div>');
         });
     });
 });
