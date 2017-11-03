@@ -13,26 +13,24 @@
     <div class="container">
         <h1 class="jumbotron-heading">フォトアルバム</h1>
         <p class="lead text-muted"></p>
-        <p>
-            <button class="btn btn-primary">Main action</button>
-            <button class="btn btn-secondary">Secondary action</button>
-        </p>
+        <div><button id="js-image-upload" class="btn btn-primary">画像をアップロード</button></div>
+        <div>※画像を複数選択できます（最大5枚）</div>
+        <form id="imageInputForm" name="imageInputForm" method="post" th:object="${imageInputForm}">
+            <input id="files" type="file" name="files" multiple="multiple" accept="image/*" style="display: none;"/>
+        </form>
     </div>
 </section>
+<div class="alert"></div>
 <div class="album text-muted">
     <div class="container">
         <div class="row">
             <div th:if="${photoList.size()} > 0" th:each="photo, stat : ${photoList}" class="card">
                 <p class="card-text" th:text="|Photo${stat.count}|">Photo01</p>
-                <img style="height: 260px; width: 100%; display: block;" th:src="@{|${photo.imageUrl}|}"/>
+                <img style="display: block;" th:src="@{|${photo.imageUrl}|}"/>
             </div>
         </div>
     </div>
 </div>
-<form id="imageInputForm" name="imageInputForm" method="post">
-    <input id="files" type="file" name="files" multiple="multiple" accept="image/*"/>
-</form>
-<div><button id="js-image-upload">画像をアップロード</button></div>
 <th:block th:include="fragment/common_footer :: common_footer"></th:block>
 </body>
 </html>
