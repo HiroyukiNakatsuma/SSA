@@ -1,33 +1,32 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <title>予定一覧 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1 th:inline="text" th:text="|${targetDate}の予定一覧|"></h1>
-
-<th:block th:if="${planList.isEmpty()}">
-    <h2>あなたの予定はありません。</h2>
-</th:block>
-<th:block th:unless="${planList.isEmpty()}">
-    <table>
-        <th:block th:each="plan : ${planList}">
-            <label><a th:href="@{|/plan/detail/${plan.planId}|}" th:text="${plan.title}"></a></label>
-            <ul>
-                <li><p th:text="${#temporals.format(plan.startDate, 'yyyy/MM/dd')}"></p></li>
-                <li><p th:text="${#temporals.format(plan.startTime, 'HH:mm:ss')}"></p></li>
-                <li><p th:text="${#temporals.format(plan.endDate, 'yyyy/MM/dd')}"></p></li>
-                <li><p th:text="${#temporals.format(plan.endTime, 'HH:mm:ss')}"></p></li>
-                <li><p th:text="${plan.memo}"></p></li>
-            </ul>
+<div class="container">
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8" th:text="|${targetDate}の予定一覧|">予定一覧</h1>
+        </div>
+        <th:block th:if="${planList.isEmpty()}">
+            <p>この日の予定はありません。</p>
         </th:block>
-    </table>
-</th:block>
-
-<th:block th:include="fragment/common_footer :: common_footer"></th:block>
-
+        <th:block th:unless="${planList.isEmpty()}">
+            <div class="row marketing">
+                <div class="col-lg-6">
+                    <th:block th:each="plan : ${planList}">
+                        <h4><a th:href="@{|/plan/detail/${plan.planId}|}" th:text="${plan.title}"></a></h4>
+                        <p th:text="|${#temporals.format(plan.startDate, 'yyyy/MM/dd')} ${#temporals.format(plan.startTime, 'HH:mm:ss')} 〜 ${#temporals.format(plan.endDate, 'yyyy/MM/dd')} ${#temporals.format(plan.endTime, 'HH:mm:ss')} ${plan.memo}|"></p>
+                    </th:block>
+                </div>
+            </div>
+        </th:block>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
 </body>
 </html>
