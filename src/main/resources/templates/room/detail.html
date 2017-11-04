@@ -2,54 +2,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
-    <link rel="stylesheet" type="text/css" th:href="@{|/css/room/detail.css|}" media="all"/>
     <title>ルーム詳細 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/room/detail.css|}" media="all"/>
 </head>
 <body>
-
-<h1 th:inline="text">ルーム詳細画面</h1>
-
-<div class="alert alert-success" th:if="${successMessage}"><span th:text="${successMessage}"></span></div>
-
-<div th:text="|ルーム名 : ${detail.roomName}|"></div>
-<th:block th:unless="${detail.joinAccounts.isEmpty()}">
-    <p>参加メンバー</p>
-    <div th:each="joinAccount : ${detail.joinAccounts}">
-        <div th:text="|${joinAccount.nickname} （オーナー）|"></div>
-    </div>
-</th:block>
-
-<p th:text="|${calendar.month.value}月|" class="month"/>
-<table border="3" width="90%" align="center" class="calendar">
-    <tr class="column day-of-week">
-        <td><p>MON</p></td>
-        <td><p>TUE</p></td>
-        <td><p>WED</p></td>
-        <td><p>THU</p></td>
-        <td><p>FRI</p></td>
-        <td><p>SAT</p></td>
-        <td><p>SUN</p></td>
-    </tr>
-    <tr class="column" th:each="weekNum : ${#numbers.sequence(0, calendar.days.size()/7 - 1)}">
-        <td th:each="dayNum : ${#numbers.sequence(0, 6)}">
-            <div><label><a class="date" th:href="@{|/plan/list/${detail.roomId}?targetDate=${#temporals.format(calendar.days[weekNum * 7 + dayNum].date, 'yyyy-MM-dd')}|}" th:text="${#temporals.format(calendar.days[weekNum * 7 + dayNum].date, 'dd')}"></a></label></div>
-            <div class="date"><span th:each="plan : ${calendar.days[weekNum * 7 + dayNum].plans}" class="plan-icon"></span></div>
-        </td>
-    </tr>
-</table>
-
-<div><a th:href="@{|/plan/input?roomId=${detail.roomId}|}">予定を作成する</a></div>
-
-<form id="createInviteLink" method="post" th:action="@{|/room/createInviteLink|}">
-    <input type="hidden" name="roomId" th:value="${detail.roomId}"/>
-    <div><input type="submit" value="このルームの招待リンクを生成する"/></div>
-</form>
-
-<div><a th:href="@{|/album/${detail.roomId}|}">アルバムを見る</a></div>
-
-<div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
-
-<th:block th:include="fragment/common_footer :: common_footer"></th:block>
-
+<div class="container">
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8" th:text="|${detail.roomName}|">ルーム名</h1>
+        </div>
+        <div class="alert alert-success" th:if="${successMessage}"><span th:text="${successMessage}"></span></div>
+        <p th:text="|${calendar.month.value}月|" class="month"/>
+        <table border="3" width="90%" align="center" class="calendar">
+            <tr class="column day-of-week">
+                <td><p>MON</p></td>
+                <td><p>TUE</p></td>
+                <td><p>WED</p></td>
+                <td><p>THU</p></td>
+                <td><p>FRI</p></td>
+                <td><p>SAT</p></td>
+                <td><p>SUN</p></td>
+            </tr>
+            <tr class="column" th:each="weekNum : ${#numbers.sequence(0, calendar.days.size()/7 - 1)}">
+                <td th:each="dayNum : ${#numbers.sequence(0, 6)}">
+                    <div><label><a class="date" th:href="@{|/plan/list/${detail.roomId}?targetDate=${#temporals.format(calendar.days[weekNum * 7 + dayNum].date, 'yyyy-MM-dd')}|}" th:text="${#temporals.format(calendar.days[weekNum * 7 + dayNum].date, 'dd')}"></a></label></div>
+                    <div class="date"><span th:each="plan : ${calendar.days[weekNum * 7 + dayNum].plans}" class="plan-icon"></span></div>
+                </td>
+            </tr>
+        </table>
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>参加メンバー</h4>
+                <p th:each="joinAccount : ${detail.joinAccounts}" th:text="|${joinAccount.nickname}|"></p>
+            </div>
+        </div>
+        <p><a class="btn btn-primary" th:href="@{|/plan/input?roomId=${detail.roomId}|}">新しい予定を作成</a></p>
+        <p><a class="btn btn-primary" th:href="@{|/album/${detail.roomId}|}">アルバムを見る</a></p>
+        <form id="createInviteLink" method="post" th:action="@{|/room/createInviteLink|}">
+            <input type="hidden" name="roomId" th:value="${detail.roomId}"/>
+            <p><input class="btn btn-primary" type="submit" value="招待する"/></p>
+        </form>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
 </body>
 </html>

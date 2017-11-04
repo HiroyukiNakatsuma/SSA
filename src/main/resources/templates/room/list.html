@@ -1,33 +1,32 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
-    <title>ルーム一覧 - SSA</title>
+    <title>参加ルーム一覧 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1 th:inline="text">ルーム一覧画面</h1>
-
-<th:block th:if="${roomList.isEmpty()}">
-    <h2>あなたのルームはありません。</h2>
-</th:block>
-<th:block th:unless="${roomList.isEmpty()}">
-    <table>
-        <th:block th:each="room : ${roomList}">
-            <ul>
-                <li>
-                    <label>
-                        <a th:href="@{|/room/detail/${room.roomId}|}" th:text="${room.roomName}"></a>
-                        <th:block th:if="${room.roomRole == 1}">　※あなたがオーナーです。</th:block>
-                    </label>
-                </li>
-            </ul>
+<div class="container">
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8">参加ルーム一覧</h1>
+        </div>
+        <th:block th:if="${roomList.isEmpty()}">
+            <p>参加中のルームはありません。</p>
         </th:block>
-    </table>
-</th:block>
-
-<th:block th:include="fragment/common_footer :: common_footer"></th:block>
-
+        <th:block th:unless="${roomList.isEmpty()}">
+            <div class="row marketing">
+                <div class="col-lg-6">
+                    <th:block th:each="room : ${roomList}">
+                        <h4><a th:href="@{|/room/detail/${room.roomId}|}" th:text="${room.roomName}"></a></h4>
+                        <p th:if="${room.roomRole == 1}">※オーナー</p>
+                    </th:block>
+                </div>
+            </div>
+        </th:block>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
 </body>
 </html>

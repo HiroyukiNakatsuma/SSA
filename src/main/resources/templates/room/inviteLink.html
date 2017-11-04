@@ -2,22 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>招待リンク生成 - SSA</title>
     <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
     <script src="/js/room/inviteLink.js" th:src="@{|/js/room/inviteLink.js|}"></script>
-    <title>招待リンク生成 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1 th:inline="text">招待リンク生成画面</h1>
-
-<div>
-    <p>招待リンク : </p><input id="inviteLinkUrl" th:value="${inviteLinkUrl}" size="80"/>
-    <img class="btn clipboard" data-clipboard-target="#inviteLinkUrl" th:src="@{/image/clipBoard.png}"/>
+<div class="container">
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
+    <main role="main">
+        <div class="jumbotron">
+            <p class="lead">以下のURLをコピーして、招待したい人に送りましょう。</p>
+        </div>
+        <div class="col-lg-6">
+            <h4>招待リンク</h4>
+            <p>
+                <input id="inviteLinkUrl" th:value="${inviteLinkUrl}" size="80"/>
+                <img class="btn clipboard" data-clipboard-target="#inviteLinkUrl" th:src="@{/image/clipBoard.png}"/>
+            </p>
+        </div>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
 </div>
-
-<div><a th:href="@{|/room/list|}">ルーム一覧へ</a></div>
-
-<th:block th:include="fragment/common_footer :: common_footer"></th:block>
-
 </body>
 </html>

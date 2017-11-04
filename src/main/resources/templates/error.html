@@ -3,11 +3,14 @@
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <title>Error - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1 th:text="|Error - ${status}|"></h1>
-<p th:text="|${error}|"></p>
-
+<main role="main">
+    <div class="jumbotron">
+        <h1 class="display-8" th:text="|Error - ${status}|">Error Status</h1>
+        <p class="lead" th:text="|${error}|"></p>
+    </div>
+</main>
 </body>
 </html>

@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
-    <title>スタート</title>
+    <title>スタート - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1>スタート！</h1>
-
-<p>ニックネームを登録して始めよう！</p>
-
-<form method="post" th:action="@{|/account/startRegister|}" th:object="${accountStartRegisterForm}">
-    <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-        <span>Error!!</span>
-    </div>
-    <p><label>Nickname : <input type="text" name="nickname" th:value="*{nickname}" size="30" maxlength="40"/></label></p>
-    <input type="hidden" name="accountId" th:value="${accountId}"/>
-    <input type="submit" value="submit!!"/>
-</form>
-
-<a type="button" th:href="@{/login}">ログイン画面へ</a>
-
+<div class="container">
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8">スタート！</h1>
+            <p class="lead">ニックネームを登録して始めよう！</p>
+        </div>
+        <form method="post" th:action="@{|/account/startRegister|}" th:object="${accountStartRegisterForm}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                <span>入力内容に誤りがあります。</span>
+            </div>
+            <div class="col-lg-6">
+                <h4>ニックネーム</h4>
+                <p><input type="text" name="nickname" th:value="*{nickname}" size="30" maxlength="40"/></p>
+            </div>
+            <p style="text-align: center;"><input class="btn btn-primary" type="submit" value="スタート"/></p>
+            <input type="hidden" name="accountId" th:value="${accountId}"/>
+        </form>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
 </body>
 </html>

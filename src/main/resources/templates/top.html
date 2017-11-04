@@ -3,26 +3,33 @@
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <title>Top - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-<div class="container" style="margin-top: 30px;">
+<div class="container">
     <th:block th:include="fragment/common_header :: common_header"></th:block>
-    <div class="jumbotron" style="text-align: center;">
-        <h1 class="display-5">スケジュールシェアアプリ</h1>
-        <p class="lead">特定の人とのプライベートな予定を共有することができます。</p>
-        <p><a class="btn btn-primary btn-lg" th:href="@{/account/input}" role="button">Sign up</a></p>
-        <p><a th:href="@{/login}" class="btn btn-primary">Sign in</a></p>
-    </div>
-    <div class="row marketing">
-        <div class="col-lg-6">
-            <h4>ルームを作成</h4>
-            <p>プライベートなルームを作成できます。</p>
-            <h4>ルームで予定を共有</h4>
-            <p>ルームメンバーとのプライベートな予定を共有することで、お互いの予定を知ることができます。</p>
-            <h4>ルームに家族・友達を招待</h4>
-            <p>ルームに家族や友達を招待できます。</p>
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-3">Schedule Share App</h1>
+            <p class="lead">特定の人とのプライベートな予定を共有することができます。</p>
+            <p><a class="btn btn-lg btn-primary" th:href="@{/login}" role="button">Sign in</a></p>
+            <p><a class="btn btn-success" th:href="@{/account/input}" role="button">Sign up</a></p>
         </div>
-    </div>
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4>ルームを作成</h4>
+                <p>友達・家族・恋人とプライベートなルームを作成できます。</p>
+                <h4>URLで簡単に招待</h4>
+                <p>URLを送ることでルームに友達・家族・恋人を招待できます。</p>
+            </div>
+            <div class="col-lg-6">
+                <h4>ルームで予定を共有</h4>
+                <p>ルームメンバーとお互いの予定を共有することができます。</p>
+                <h4>ルームでコミュニケーション</h4>
+                <p>ルームメンバー同士で写真の共有などのコミュニケーションができます。</p>
+            </div>
+        </div>
+    </main>
     <th:block th:include="fragment/common_footer :: common_footer"></th:block>
 </div>
 </body>

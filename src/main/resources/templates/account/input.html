@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
-    <title>新規会員登録</title>
+    <title>新規会員登録 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1>新規会員登録</h1>
-
-<form method="post" th:action="@{|/account/register|}" th:object="${accountRegisterForm}">
-    <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-        <span>Error!!</span>
-    </div>
-    <div class="alert alert-danger" th:if="${mailAddressError}">
-        <span>MailAddress is already exists !!</span>
-    </div>
-
-    <p><label>MailAddress : <input type="email" name="mailAddress" th:value="*{mailAddress}" size="30" maxlength="40"/></label></p>
-
-    <p><label>Password : <input type="password" name="password" th:value="*{password}" size="30" maxlength="40"/></label></p>
-
-    <input type="submit" value="submit!!"/>
-</form>
-
+<div class="container">
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8">新規会員登録</h1>
+            <p class="lead">登録する情報を入力してください。</p>
+        </div>
+        <form id="accountRegisterForm" method="post" th:action="@{|/account/register|}" th:object="${accountRegisterForm}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                <span>入力内容に誤りがあります。</span>
+            </div>
+            <div class="alert alert-danger" th:if="${mailAddressError}">
+                <span>そのメールアドレスは、すでに登録されています。</span>
+            </div>
+            <div class="col-lg-6">
+                <h4>MailAddress</h4>
+                <p><input type="email" name="mailAddress" th:value="*{mailAddress}" size="30" maxlength="40"/></p>
+                <h4>Password</h4>
+                <p><input type="password" name="password" th:value="*{password}" size="30" maxlength="40"/></p>
+            </div>
+            <p><input class="btn btn-primary" type="submit" value="登録する"/></p>
+        </form>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
 </body>
 </html>
