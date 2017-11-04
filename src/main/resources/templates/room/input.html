@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="fragment/common_head :: common_head"></th:block>
     <title>ルーム作成 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
 </head>
 <body>
-
-<h1 th:inline="text">ルーム作成画面</h1>
-
-<form id="roomCreateForm" method="post" th:action="@{|/room/create|}" th:object="${roomCreateForm}">
-    <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-        <span>Error!!</span>
-    </div>
-    <input type="text" name="roomName" th:value="*{roomName}" size="30" maxlength="40"/>
-    <input type="submit" class="button" value="ルーム作成"/>
-</form>
-
-<a th:href="@{|/room/list|}">ルーム一覧へ</a>
-
-<th:block th:include="fragment/common_footer :: common_footer"></th:block>
-
+<div class="container">
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8">ルーム作成</h1>
+        </div>
+        <form id="roomCreateForm" method="post" th:action="@{|/room/create|}" th:object="${roomCreateForm}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                <span>入力内容に誤りがあります。</span>
+            </div>
+            <div class="row marketing">
+                <div class="col-lg-6">
+                    <h4>ルーム名</h4>
+                    <p><input type="text" name="roomName" th:value="*{roomName}" size="30" maxlength="40"/></p>
+                </div>
+            </div>
+            <p style="text-align: center;"><input class="btn btn-primary" type="submit" value="作成する"/></p>
+        </form>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
 </body>
 </html>
