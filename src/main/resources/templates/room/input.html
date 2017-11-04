@@ -20,9 +20,9 @@
                 <div class="col-lg-6">
                     <h4>ルーム名</h4>
                     <p><input type="text" name="roomName" th:value="*{roomName}" size="30" maxlength="40"/></p>
+                    <p><input class="btn btn-primary" type="submit" value="作成する"/></p>
                 </div>
             </div>
-            <p style="text-align: center;"><input class="btn btn-primary" type="submit" value="作成する"/></p>
         </form>
     </main>
     <th:block th:include="fragment/common_footer :: common_footer"></th:block>
