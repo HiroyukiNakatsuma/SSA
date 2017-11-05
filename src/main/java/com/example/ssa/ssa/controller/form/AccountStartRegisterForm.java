@@ -9,6 +9,6 @@ import javax.validation.constraints.NotNull;
 public class AccountStartRegisterForm {
     @NotNull
     private Long accountId;
-    @NotEmpty
+    @NotEmpty(message = "{account.nickname.notEmpty}")
     private String nickname;
 }
