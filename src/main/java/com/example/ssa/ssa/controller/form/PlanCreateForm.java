@@ -1,5 +1,6 @@
 package com.example.ssa.ssa.controller.form;
 
+import com.example.ssa.ssa.component.annotation.SsaDateTime;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -7,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
+@SsaDateTime
 public class PlanCreateForm {
     @NotNull
     private Long roomId;
