@@ -4,6 +4,7 @@ import com.example.ssa.ssa.domain.mapper.PlanMapper;
 import com.example.ssa.ssa.domain.model.CalendarWithPlan;
 import com.example.ssa.ssa.domain.model.Day;
 import com.example.ssa.ssa.domain.model.Plan;
+import com.example.ssa.ssa.domain.model.PlanDetail;
 import com.example.ssa.ssa.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ public class PlanService {
      * @param planId 予定ID
      * @return 予定詳細情報
      */
-    public Plan loadDetail(Long planId) {
+    public PlanDetail loadDetail(Long planId) {
         return planMapper.selectDetailById(planId);
     }
 }

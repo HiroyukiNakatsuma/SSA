@@ -78,19 +78,21 @@
         )
     </select>
 
-    <select id="selectDetailById" resultType="com.example.ssa.ssa.domain.model.Plan">
+    <select id="selectDetailById" resultType="com.example.ssa.ssa.domain.model.PlanDetail">
         SELECT
-            planId,
-            roomId,
-            title,
-            startDate,
-            startTime,
-            endDate,
-            endTime,
-            memo,
-            createdAccountId
+            P.planId,
+            P.roomId,
+            P.title,
+            P.startDate,
+            P.startTime,
+            P.endDate,
+            P.endTime,
+            P.memo,
+            P.createdAccountId,
+            A.nickname AS createdAccountNickname
         FROM
-            Plan
+            Plan P
+        INNER JOIN Account A ON P.createdAccountId = A.accountId
         WHERE
             planId = #{planId}
     </select>
