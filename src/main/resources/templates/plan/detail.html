@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragment/common_head :: common_head"></th:block>
+    <title>予定詳細 - SSA</title>
+    <link rel="stylesheet" type="text/css" th:href="@{|/css/top.css|}"/>
+</head>
+<body>
+<div class="container">
+    <th:block th:include="fragment/common_header :: common_header"></th:block>
+    <main role="main">
+        <div class="jumbotron">
+            <h1 class="display-8" th:text="${detail.title}">タイトル</h1>
+        </div>
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <h4 th:text="|${#temporals.format(detail.startDate, 'yyyy/MM/dd')}|"></h4>
+                <p th:text="|${#temporals.format(detail.startTime, 'HH:mm:ss')}|"></p>
+                <h4>特記事項</h4>
+                <p th:text="${detail.memo}"></p>
+                <h4>作成者</h4>
+                <p th:text="${detail.createdAccountNickname}"></p>
+            </div>
+            <div class="col-lg-6">
+                <h4 th:text="|${#temporals.format(detail.endDate, 'yyyy/MM/dd')}|"></h4>
+                <p th:text="|${#temporals.format(detail.endTime, 'HH:mm:ss')}|"></p>
+            </div>
+        </div>
+    </main>
+    <th:block th:include="fragment/common_footer :: common_footer"></th:block>
+</div>
+</body>
+</html>
