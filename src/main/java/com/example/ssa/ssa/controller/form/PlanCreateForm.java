@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class PlanCreateForm {
     @NotNull
     private Long roomId;
-    @NotEmpty
+    @NotEmpty(message = "{plan.title.notNull}")
     @Length(max = 40)
     private String title;
     @NotNull

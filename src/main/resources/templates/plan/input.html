@@ -15,16 +15,9 @@
         <div class="alert alert-alert" th:if="${notJoinedMessage}"><span th:text="${notJoinedMessage}"></span></div>
         <div class="alert alert-success" th:if="${createPlanMessage}"><span th:text="${createPlanMessage}"></span></div>
         <form id="planCreateForm" method="post" th:action="@{/plan/create}" th:object="${planCreateForm}">
-            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-                <span>入力に誤りがあります。</span>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}" th:each="err : ${#fields.allErrors()}">
+                <span th:text="${err}">エラーメッセージ</span>
             </div>
-            <th:block th:if="${#fields.hasErrors()}">
-                <th:block th:each="err : ${#fields.allErrors()}">
-                    <div class="alert alert-danger">
-                        <span th:text="${err}">エラーメッセージ</span>
-                    </div>
-                </th:block>
-            </th:block>
             <div class="row marketing">
                 <div class="col-lg-6">
                     <h4>タイトル</h4>
