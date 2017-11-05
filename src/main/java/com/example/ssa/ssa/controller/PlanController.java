@@ -57,21 +57,14 @@ public class PlanController {
         if (result.hasErrors()) {
             return "plan/input";
         }
-        // 開始日時より終了日時の方が早い場合、エラー
-        // TODO フォームバリデーションに移管
-        if (LocalDateTime.parse(form.getStartDate().concat(" ").concat(form.getStartTime()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                .isAfter(LocalDateTime.parse(form.getEndDate().concat(" ").concat(form.getEndTime()), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))) {
-            model.addAttribute("dateErrorMessage", messageSource.getMessage("plan.dateError", null, Locale.getDefault()));
-            return "plan/input";
-        }
         try {
             planService.create(
                     form.getRoomId(),
                     form.getTitle(),
                     LocalDate.parse(form.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                    LocalTime.parse(form.getStartTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    LocalTime.parse(form.getStartTime().concat(":00"), DateTimeFormatter.ofPattern("HH:mm:ss")),
                     LocalDate.parse(form.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                    LocalTime.parse(form.getEndTime(), DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    LocalTime.parse(form.getEndTime().concat(":00"), DateTimeFormatter.ofPattern("HH:mm:ss")),
                     form.getMemo(),
                     loginUser.getAccountId());
         } catch (Exception e) {

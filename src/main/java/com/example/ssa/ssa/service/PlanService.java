@@ -78,7 +78,7 @@ public class PlanService {
                        LocalTime endTime,
                        String memo,
                        long accountId) throws Exception {
-        if (roomService.isJoined(accountId, roomId)) {
+        if (!roomService.isJoined(accountId, roomId)) {
             throw new BadRequestException();
         }
         planMapper.insert(roomId, title, startDate, startTime, endDate, endTime, memo, accountId);

@@ -13,8 +13,8 @@
             <p class="lead">ニックネームを登録して始めよう！</p>
         </div>
         <form method="post" th:action="@{|/account/startRegister|}" th:object="${accountStartRegisterForm}">
-            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-                <span>入力内容に誤りがあります。</span>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}" th:each="err : ${#fields.allErrors()}">
+                <span th:text="${err}">エラーメッセージ</span>
             </div>
             <div class="col-lg-6">
                 <h4>ニックネーム</h4>

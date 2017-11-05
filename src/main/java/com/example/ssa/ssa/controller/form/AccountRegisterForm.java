@@ -7,10 +7,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @Confirm(field = "password")
 public class AccountRegisterForm {
-    @NotEmpty
+    @NotEmpty(message = "{account.mailAddress.notEmpty}")
     private String mailAddress;
-    @NotEmpty
+    @NotEmpty(message = "{account.password.notEmpty}")
     private String password;
-    @NotEmpty
+    @NotEmpty(message = "{account.confirmPassword.notEmpty}")
     private String confirmPassword;
 }

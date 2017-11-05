@@ -13,8 +13,8 @@
             <p class="lead">登録する情報を入力してください。</p>
         </div>
         <form id="accountRegisterForm" method="post" th:action="@{|/account/register|}" th:object="${accountRegisterForm}">
-            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-                <span>入力内容に誤りがあります。</span>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}" th:each="err : ${#fields.allErrors()}">
+                <span th:text="${err}">エラーメッセージ</span>
             </div>
             <div class="alert alert-danger" th:if="${mailAddressError}">
                 <span>そのメールアドレスは、すでに登録されています。</span>

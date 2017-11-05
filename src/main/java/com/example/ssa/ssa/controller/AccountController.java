@@ -60,8 +60,10 @@ public class AccountController {
      */
     @PostMapping("/startRegister")
     public String startRegister(@Validated AccountStartRegisterForm form,
-                                BindingResult result) {
+                                BindingResult result,
+                                Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("accountId", form.getAccountId());
             return "account/start";
         }
         accountService.registerNickname(form.getAccountId(), form.getNickname());
