@@ -13,7 +13,7 @@ public class PlanCreateForm {
     @NotNull
     private Long roomId;
     @NotEmpty(message = "{plan.title.notNull}")
-    @Length(max = 40)
+    @Length(max = 40, message = "{plan.title.max}")
     private String title;
     @NotNull
     private String startDate;
@@ -23,6 +23,6 @@ public class PlanCreateForm {
     private String endDate;
     @NotNull
     private String endTime;
-    @Length(max = 100)
+    @Length(max = 100, message = "{plan.memo.max}")
     private String memo;
 }
