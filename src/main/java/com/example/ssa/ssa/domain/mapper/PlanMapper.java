@@ -1,6 +1,7 @@
 package com.example.ssa.ssa.domain.mapper;
 
 import com.example.ssa.ssa.domain.model.Plan;
+import com.example.ssa.ssa.domain.model.PlanDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,9 @@ public interface PlanMapper {
                 @Param("memo") String memo,
                 @Param("createdAccountId") long createdAccountId);
 
+    boolean selectExistsById(@Param("planId") long planId);
+
+    boolean selectExistsByAccountJoinRoom(@Param("planId") long planId, @Param("accountId") long accountId);
+
+    PlanDetail selectDetailById(@Param("planId") long planId);
 }

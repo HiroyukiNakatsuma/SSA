@@ -11,10 +11,10 @@
     <th:block th:include="fragment/common_header :: common_header"></th:block>
     <main role="main">
         <div class="jumbotron">
-            <h1 class="display-8" th:text="|${detail.roomName}|">ルーム名</h1>
+            <h1 class="display-8" th:text="|${calendar.month.value}月の予定|">月</h1>
+            <p class="lead" th:text="|${detail.roomName}|">ルーム名</p>
         </div>
         <div class="alert alert-success" th:if="${successMessage}"><span th:text="${successMessage}"></span></div>
-        <p th:text="|${calendar.month.value}月|" class="month"/>
         <table border="3" width="90%" align="center" class="calendar">
             <tr class="column day-of-week">
                 <td><p>MON</p></td>
