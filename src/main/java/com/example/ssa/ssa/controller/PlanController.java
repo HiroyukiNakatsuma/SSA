@@ -3,6 +3,7 @@ package com.example.ssa.ssa.controller;
 import com.example.ssa.ssa.component.security.LoginUser;
 import com.example.ssa.ssa.component.security.LoginUserDetails;
 import com.example.ssa.ssa.controller.form.PlanCreateForm;
+import com.example.ssa.ssa.exception.BadRequestException;
 import com.example.ssa.ssa.service.PlanService;
 import com.example.ssa.ssa.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +95,19 @@ public class PlanController {
         model.addAttribute("planList", planService.loadListOfDate(roomId, LocalDate.parse(targetDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         model.addAttribute("targetDate", targetDate);
         return "plan/list";
+    }
+
+    /**
+     * 予定詳細画面表示
+     */
+    @GetMapping("/detail/{planId}")
+    public String detail(@PathVariable long planId,
+                         @AuthenticationPrincipal LoginUserDetails loginUserDetails,
+                         Model model) {
+        if (!planService.isValid(planId, loginUserDetails.getLoginUser().getAccountId())) {
+            throw new BadRequestException();
+        }
+        model.addAttribute("detail", planService.loadDetail(planId));
+        return "plan/detail";
     }
 }

@@ -49,4 +49,49 @@
             now()
         )
     </insert>
+
+    <select id="selectExistsById" resultType="boolean">
+        SELECT (
+            EXISTS (
+                SELECT
+                    1
+                FROM
+                    Plan
+                WHERE
+                    planId = #{planId}
+            )
+        )
+    </select>
+
+    <select id="selectExistsByAccountJoinRoom" resultType="boolean">
+        SELECT (
+            EXISTS (
+                SELECT
+                    1
+                FROM
+                    Plan P
+                    INNER JOIN Room R ON P.roomId = R.roomId
+                    INNER JOIN AccountJoinRoom AJR ON R.roomId = AJR.roomId AND AJR.accountId = #{accountId}
+                WHERE
+                    P.planId = #{planId}
+            )
+        )
+    </select>
+
+    <select id="selectDetailById" resultType="com.example.ssa.ssa.domain.model.Plan">
+        SELECT
+            planId,
+            roomId,
+            title,
+            startDate,
+            startTime,
+            endDate,
+            endTime,
+            memo,
+            createdAccountId
+        FROM
+            Plan
+        WHERE
+            planId = #{planId}
+    </select>
 </mapper>

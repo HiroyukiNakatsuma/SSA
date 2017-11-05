@@ -23,4 +23,9 @@ public interface PlanMapper {
                 @Param("memo") String memo,
                 @Param("createdAccountId") long createdAccountId);
 
+    boolean selectExistsById(@Param("planId") long planId);
+
+    boolean selectExistsByAccountJoinRoom(@Param("planId") long planId, @Param("accountId") long accountId);
+
+    Plan selectDetailById(@Param("planId") long planId);
 }

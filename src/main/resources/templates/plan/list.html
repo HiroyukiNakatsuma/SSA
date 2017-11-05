@@ -10,7 +10,7 @@
     <th:block th:include="fragment/common_header :: common_header"></th:block>
     <main role="main">
         <div class="jumbotron">
-            <h1 class="display-8" th:text="|${targetDate}の予定一覧|">予定一覧</h1>
+            <h1 class="display-8" th:text="|${targetDate}の予定|">予定一覧</h1>
         </div>
         <th:block th:if="${planList.isEmpty()}">
             <p>この日の予定はありません。</p>
@@ -20,7 +20,7 @@
                 <div class="col-lg-6">
                     <th:block th:each="plan : ${planList}">
                         <h4><a th:href="@{|/plan/detail/${plan.planId}|}" th:text="${plan.title}"></a></h4>
-                        <p th:text="|${#temporals.format(plan.startDate, 'yyyy/MM/dd')} ${#temporals.format(plan.startTime, 'HH:mm:ss')} 〜 ${#temporals.format(plan.endDate, 'yyyy/MM/dd')} ${#temporals.format(plan.endTime, 'HH:mm:ss')} ${plan.memo}|"></p>
+                        <p th:text="|${#temporals.format(plan.startTime, 'HH:mm:ss')} 〜 ${#temporals.format(plan.endTime, 'HH:mm:ss')}|"></p>
                     </th:block>
                 </div>
             </div>

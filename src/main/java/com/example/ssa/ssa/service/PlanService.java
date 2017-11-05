@@ -82,4 +82,26 @@ public class PlanService {
         }
         planMapper.insert(roomId, title, startDate, startTime, endDate, endTime, memo, accountId);
     }
+
+    /**
+     * 予定が妥当かどうか
+     * 予定が存在する、かつ、参照可能であれば、trueを返す
+     *
+     * @param planId    予定ID
+     * @param accountId 会員ID
+     * @return
+     */
+    public boolean isValid(long planId, long accountId) {
+        return planMapper.selectExistsById(planId) && planMapper.selectExistsByAccountJoinRoom(planId, accountId);
+    }
+
+    /**
+     * 予定の詳細情報を取得
+     *
+     * @param planId 予定ID
+     * @return 予定詳細情報
+     */
+    public Plan loadDetail(Long planId) {
+        return planMapper.selectDetailById(planId);
+    }
 }
