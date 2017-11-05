@@ -13,8 +13,8 @@
             <h1 class="display-8">ルーム作成</h1>
         </div>
         <form id="roomCreateForm" method="post" th:action="@{|/room/create|}" th:object="${roomCreateForm}">
-            <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
-                <span>入力内容に誤りがあります。</span>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors()}" th:each="err : ${#fields.allErrors()}">
+                <span th:text="${err}">エラーメッセージ</span>
             </div>
             <div class="row marketing">
                 <div class="col-lg-6">
