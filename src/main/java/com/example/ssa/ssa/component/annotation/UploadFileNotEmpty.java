@@ -23,5 +23,4 @@ public @interface UploadFileNotEmpty {
     @interface List {
         UploadFileNotEmpty[] value();
     }
-
 }
